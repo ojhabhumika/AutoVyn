@@ -1,16 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import CreateRequest from './src/screens/DiscountRequest/CreateRequest'
-import RequestList from './src/screens/DiscountRequest/Index'
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { StyleSheet, Text, View } from 'react-native';
+import Login from './src/screens/Login'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <CreateRequest />
-      {/* <RequestList /> */}
-    </View>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <Login />
+      </ApplicationProvider>
+    </>
   );
 }
 
