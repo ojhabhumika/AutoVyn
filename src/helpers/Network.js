@@ -4,12 +4,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 const client = axiosClient()
 
 export const request = async ({ url, method, data }) => {
+
     method = method.toUpperCase()
-    const token = await AsyncStorage.getItem('token')
+    //const token = await AsyncStorage.getItem('token')
     const payload = {
         method, url,
         headers: {
-            'x-access-token': token,
+            //'x-access-token': token,
             'Content-Type' : 'application/json'},
         data
     }
@@ -19,15 +20,16 @@ export const request = async ({ url, method, data }) => {
             .then(res => resolve(res))
             .catch(err => {
                 
-                if (err.response.status == 401 && err.response.data.message == "TokenExpiredError") {
-                    console.log('err',err, err.response.data.message);
-                    refresh(token).then(() => {
-                        console.log('url', url);
-                        request({ url, method, data })
-                    }).catch(err => {
-                        reject(err)
-                    })
-                }
+                // if (err.response.status == 401 && err.response.data.message == "TokenExpiredError") {
+                //     console.log('err',err, err.response.data.message);
+                //     refresh(token).then(() => {
+                //         console.log('url', url);
+                //         request({ url, method, data })
+                //     }).catch(err => {
+                //         reject(err)
+                //     })
+                // }
+                console.log('err :>> ', err);
                 reject(err)
             })
     })

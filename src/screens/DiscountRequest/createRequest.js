@@ -19,19 +19,19 @@ const CreateRequest = () => {
     const [proposedDiscountAmt, setProposedDiscountAmt] = useState();
 
     return (
-        <LottieView
-            source={require('../../../assets/lottie/Loading_Car.json')}
-            colorFilters={[{
-                keypath: "button",
-                color: "#F00000"
-            }, {
-                keypath: "Sending Loader",
-                color: "#F00000"
-            }]}
-            autoPlay
-            loop
-            resizeMode='cover'
-        />
+        // <LottieView
+        //     source={require('../../../assets/lottie/carLoading.json')}
+        //     colorFilters={[{
+        //         keypath: "button",
+        //         color: "#F00000"
+        //     }, {
+        //         keypath: "Sending Loader",
+        //         color: "#F00000"
+        //     }]}
+        //     autoPlay
+        //     loop
+        // />
+        <></>
     )
 
     // return (
