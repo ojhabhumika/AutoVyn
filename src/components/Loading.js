@@ -12,6 +12,8 @@ const Loading = () => {
                 keypath: "Sending Loader",
                 color: "#F00000"
             }]}
+            height={100}
+            width={100}
             autoPlay
             loop
         />
