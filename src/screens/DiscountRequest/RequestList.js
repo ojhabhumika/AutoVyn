@@ -6,7 +6,7 @@ import LottieView from 'lottie-react-native';
 import { parseISO, isToday, isYesterday } from 'date-fns'
 import { Text } from '@ui-kitten/components';
 
-const RequestList = ({ discountReqList, bankNames, userNames, loading, setLoading }) => {
+const RequestList = ({ discountReqList, userNames, loading, setLoading }) => {
 
     const [groupedList, setGroupedList] = useState([])
 
@@ -39,18 +39,7 @@ const RequestList = ({ discountReqList, bankNames, userNames, loading, setLoadin
     return (
         <>
             { loading ?
-                // <LottieView
-                //     source={require('../../../assets/lottie/carLoading.json')}
-                //     colorFilters={[{
-                //         keypath: "button",
-                //         color: "#F00000"
-                //     }, {
-                //         keypath: "Sending Loader",
-                //         color: "#F00000"
-                //     }]}
-                //     autoPlay
-                //     loop
-                // />
+               
                 <Text>Loading...</Text>
                 :
                 <ScrollView contentContainerStyle={{
@@ -92,7 +81,7 @@ const RequestList = ({ discountReqList, bankNames, userNames, loading, setLoadin
 const RequestCard = ({ requestData, bank, user }) => {
 
     const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
-        isFinance, proposedDiscountAmount, loanAmount, reqId, status } = requestData
+        isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
 
     const getLightColor = status == null
         ? colors.lightBlue
@@ -149,7 +138,7 @@ const RequestCard = ({ requestData, bank, user }) => {
                     <View style={styles.cardRow}>
                         <Icon name="cash-outline" size={25} color={colors.icon} />
                         <Text style={styles.cardText}>
-                            {bank.name}, ₹{loanAmount ?? 0}
+                            {bankName}, ₹{loanAmount ?? 0}
                         </Text>
                     </View>
                 }

@@ -6,14 +6,15 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/screens/Login'
 import ListIndex from './src/screens/DiscountRequest/ListIndex'
+import CreateRequest from './src/screens/DiscountRequest/CreateRequest'
 
 export default function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
-        {/* <Login /> */}
-        <ListIndex />
+        <Login />
+        {/* <ListIndex /> */}
         {/* <CreateRequest /> */}
       </ApplicationProvider>
     </>

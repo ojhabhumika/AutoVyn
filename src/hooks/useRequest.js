@@ -23,9 +23,9 @@ export default () => {
             if (onFailure) {
                 onFailure(err)
             }
-            // if (err.response.status >= 500) {
-            //     Alert.alert('Something went wrong')
-            // }
+            if (err.response.status >= 500) {
+                Alert.alert('Something went wrong')
+            }
         }
     }
 

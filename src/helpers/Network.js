@@ -11,7 +11,8 @@ export const request = async ({ url, method, data }) => {
         method, url,
         headers: {
             //'x-access-token': token,
-            'Content-Type' : 'application/json'},
+            'Content-Type': 'application/json'
+        },
         data
     }
 
@@ -19,16 +20,16 @@ export const request = async ({ url, method, data }) => {
         client(payload)
             .then(res => resolve(res))
             .catch(err => {
-                
-                // if (err.response.status == 401 && err.response.data.message == "TokenExpiredError") {
-                //     console.log('err',err, err.response.data.message);
-                //     refresh(token).then(() => {
-                //         console.log('url', url);
-                //         request({ url, method, data })
-                //     }).catch(err => {
-                //         reject(err)
-                //     })
-                // }
+
+                if (err.response.status == 401 && err.response.data.message == "TokenExpiredError") {
+                    console.log('err', err, err.response.data.message);
+                    refresh(token).then(() => {
+                        console.log('url', url);
+                        request({ url, method, data })
+                    }).catch(err => {
+                        reject(err)
+                    })
+                }
                 console.log('err :>> ', err);
                 reject(err)
             })
@@ -48,13 +49,13 @@ export const refresh = (token) => {
         client(tokenRequest).then(
             async res => {
                 const { token } = res.data;
-                console.log('res.data',res.data);
+                console.log('res.data', res.data);
                 await AsyncStorage.setItem('token', token)
                 resolve();
             }
         ).catch(
             err => {
-                console.log('error',err);
+                console.log('error', err);
                 reject(err);
             }
         )

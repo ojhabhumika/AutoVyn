@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Tab, TabView } from '@ui-kitten/components';
 import useRequest from '../../hooks/useRequest';
 import RequestList from './RequestList'
+import Loading from '../../components/Loading'
 
 const Index = () => {
 
@@ -11,7 +12,6 @@ const Index = () => {
 
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const [discountReqList, setDiscountReqList] = useState([])
-    const [bankNames, setBankNames] = useState([])
     const [userNames, setUserNames] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -22,7 +22,6 @@ const Index = () => {
             method: 'GET',
             onSuccess: (res) => {
                 setDiscountReqList(res.userRequests);
-                setBankNames(res.bankNames)
                 setUserNames(res.userNames)
             },
             onError: () => setLoading(false)
@@ -39,7 +38,6 @@ const Index = () => {
             <Tab title='PROCESSING' key="0">
                 <RequestList
                     discountReqList={discountReqList.filter(e => e.status === null)}
-                    bankNames={bankNames}
                     userNames={userNames}
                     loading={loading}
                     setLoading={setLoading}
@@ -48,7 +46,6 @@ const Index = () => {
             <Tab title='ACCEPTED' key="1">
                 <RequestList
                     discountReqList={discountReqList.filter(e => e.status === true)}
-                    bankNames={bankNames}
                     userNames={userNames}
                     loading={loading}
                     setLoading={setLoading}
@@ -57,7 +54,6 @@ const Index = () => {
             <Tab title='REJECTED' key="2">
                 <RequestList
                     discountReqList={discountReqList.filter(e => !(e.status == null || e.status == true))}
-                    bankNames={bankNames}
                     userNames={userNames}
                     loading={loading}
                     setLoading={setLoading}
