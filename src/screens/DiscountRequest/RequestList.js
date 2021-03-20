@@ -200,11 +200,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#F8F6F6",
         marginLeft: "auto",
     },
-    headerDiv: {
-        flex:1,
-        alignItems: 'center',
-        padding: 15
-    },
     headingText: {
         color: colors.text,
         fontSize: 18,
