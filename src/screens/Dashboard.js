@@ -57,7 +57,7 @@ const Dashboard = ({navigation}) => {
 
     return (
         <Layout style={styles.container}>
-            <NavigationBar style={ { shadowColor:'gray',elevation:9, shadowOpacity:1 }}/>
+            <NavigationBar menu={'logout'} style={ { shadowColor:'gray',elevation:9, shadowOpacity:1 }}/>
             <View style={styles.listContainer}>
                 <FlatList
                     data={data}

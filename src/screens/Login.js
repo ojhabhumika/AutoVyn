@@ -30,6 +30,7 @@ const Login = ({navigation}) => {
     }
 
     const onSumbit = () => {
+        return navigation.navigate('Dashboard')
         validateUserName()
         validatePwd()
         if (isUserNameValid && isPasswordValid) {

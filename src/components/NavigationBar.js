@@ -4,7 +4,12 @@ import {
 } from '@ui-kitten/components';
 import { View,TouchableOpacity, Text } from 'react-native'
 
-const NavigationBar = ({title, menu, goBack,navigation,style}) => {
+const NavigationBar = ({title, menu, goBack,navigation,style, hide}) => {
+
+    const onPress = () => {
+        if (menu != "logout") navigation.navigate('CreateRequest')
+        
+    }
     return (
         <View style={{width: '100%',
             backgroundColor:'#65BDF2',
@@ -17,9 +22,15 @@ const NavigationBar = ({title, menu, goBack,navigation,style}) => {
             </TouchableOpacity>
             }
             <Text style={{flex:1,marginLeft:22,color:'#fff',fontSize:20,fontWeight:'bold'}}>{title}</Text>
-            <TouchableOpacity style={{padding:10}}>
-                <Icon name='more-vertical-outline' width={30} height={30} fill={'#fff'}/>
-            </TouchableOpacity>
+            {!hide &&
+            <TouchableOpacity 
+                style={{padding:10}}
+                onPress={onPress}>
+                {
+                    menu == "logout" ? <Icon name='more-vertical-outline' width={30} height={30} fill={'#fff'}/> : <Icon name='plus-outline' width={30} height={30} fill={'#fff'}/>
+                }
+                
+            </TouchableOpacity>}
         </View>
     )
 }

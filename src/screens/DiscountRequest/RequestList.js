@@ -5,6 +5,7 @@ import colors from '../../constants/Colors'
 import { parseISO, isToday, isYesterday } from 'date-fns'
 import { Text } from '@ui-kitten/components';
 import Loading from '../../components/Loading'
+import ActionModal from './_ReqActionModal'
 
 const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoading, selectedIndex }) => {
 
@@ -76,6 +77,8 @@ const RequestCard = ({ requestData, bank, user }) => {
     const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
         isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
 
+        const [showModal, setShowModal] = useState(false)
+
     const getLightColor = status == null
         ? colors.lightBlue
         : (status == true ? colors.lightGreen : colors.lightRed)
@@ -83,7 +86,7 @@ const RequestCard = ({ requestData, bank, user }) => {
     return (
         <Pressable
             onPress={() => {
-                console.log("Long Press")
+               setShowModal(true) 
             }}
             style={({ pressed }) => [
                 styles.cardbg,
@@ -142,6 +145,7 @@ const RequestCard = ({ requestData, bank, user }) => {
                     </Text>
                 </View>
             </>
+            < ActionModal reqId={reqId} status={status}  hide={() => setShowModal(false)} show={showModal}/>
         </Pressable >
     )
 }
@@ -176,6 +180,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     cardText: {
+        flex:1,
         color: 'gray',
         fontSize: 16,
         paddingLeft: 10
