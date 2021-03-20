@@ -6,11 +6,11 @@ const client = axiosClient()
 export const request = async ({ url, method, data }) => {
 
     method = method.toUpperCase()
-    //const token = await AsyncStorage.getItem('token')
+    const token = await AsyncStorage.getItem('@token')
     const payload = {
         method, url,
         headers: {
-            //'x-access-token': token,
+            'x-access-token': token,
             'Content-Type': 'application/json'
         },
         data
@@ -49,8 +49,7 @@ export const refresh = (token) => {
         client(tokenRequest).then(
             async res => {
                 const { token } = res.data;
-                console.log('res.data', res.data);
-                await AsyncStorage.setItem('token', token)
+                await AsyncStorage.setItem('@token', token)
                 resolve();
             }
         ).catch(

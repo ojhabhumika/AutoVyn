@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
     Layout,
     Icon
@@ -7,58 +7,65 @@ import { View, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Text 
 const { width } = Dimensions.get('window')
 import colors from '../constants/Colors'
 import useRequest from '../hooks/useRequest';
+import UserContext from '../context/UserContext'
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
 
     const { makeRequest } = useRequest();
+    const { setUser } = useContext(UserContext)
+
     const [userName, setUserName] = useState()
     const [password, setPassword] = useState()
     const [showPwd, setShowPassword] = useState(false)
 
-    const [isUserNameValid, setIsUserNameValid] = useState(true)
-    const [isPasswordValid, setIsPasswordValid] = useState(true)
-    const [isValid, setIsValid] = useState(true)
+    const [showUserMsg, setShowUserMsg] = useState(false)
+    const [showPwdMsg, setShowPwdMsg] = useState(false)
+    const [showValidMsg, setShowValidMsg] = useState(false)
 
     const validateUserName = () => {
-        setIsUserNameValid(true)
-        if (!userName) setIsUserNameValid(false)
+        setShowUserMsg(false)
+        if (!userName) setShowUserMsg(true)
     }
 
     const validatePwd = () => {
-        setIsPasswordValid(true)
-        if (!password) setIsPasswordValid(false)
+        setShowPwdMsg(false)
+        if (!password) setShowPwdMsg(true)
     }
 
     const onSumbit = () => {
-        return navigation.navigate('Dashboard')
+
         validateUserName()
         validatePwd()
-        if (isUserNameValid && isPasswordValid) {
+        setShowValidMsg(false)
+
+        if (userName && password) {
+            console.log("api called");
             makeRequest({
                 url: '/login',
                 method: 'POST',
                 body: { userName, password },
-                onSuccess: (res) => {
-                    setIsValid(true)
-                    console.log('res :>> ', res);
-                    //navigation
-                    //setUser from context
+                onSuccess: async (res) => {
+                    setUser(res)
+                    await AsyncStorage.setItem('@token', res.token)
+                    navigation.navigate('Dashboard')
                 },
-                onFailure: () => setIsValid(false)
+                onFailure: () => setShowValidMsg(true)
             })
         }
     }
 
     return (
         <Layout style={styles.container}>
-            <View style={{ height: '40%', alignItems: 'center', 
-            justifyContent: 'center', paddingTop: 50 }}>
+            <View style={{
+                height: '40%', alignItems: 'center',
+                justifyContent: 'center', paddingTop: 50
+            }}>
                 <Image style={{ width: width / 2, height: width / 2 }}
                     source={require('../../assets/AutoVyn_Logo.jpeg')} />
             </View>
             <View style={{ flex: 1, margin: 30, marginTop: 0 }}>
                 <View style={[styles.inputView,
-                { borderBottomColor: (isUserNameValid ? "gray" : colors.logoRed) }
+                { borderBottomColor: (!showUserMsg ? "gray" : colors.logoRed) }
                 ]}
                 >
                     <Icon name={'email-outline'} width={25} height={25} fill={'#969696'} />
@@ -76,14 +83,14 @@ const Login = ({navigation}) => {
                 </View>
                 <View style={{ marginBottom: 10 }}>
                     {
-                        !isUserNameValid &&
+                        showUserMsg &&
                         <Text style={styles.errorText}>
                             User name cannot be empty
                         </Text>
                     }
                 </View>
                 <View style={[styles.inputView,
-                { borderBottomColor: (isPasswordValid ? "gray" : colors.logoRed) }
+                { borderBottomColor: (!showPwdMsg ? "gray" : colors.logoRed) }
                 ]}
                 >
                     <Icon name={'lock-outline'} width={28} height={28} fill={'#969696'} />
@@ -95,7 +102,7 @@ const Login = ({navigation}) => {
                         onChangeText={text => {
                             setPassword(text.trim())
                         }}
-                        secureTextEntry={showPwd}
+                        secureTextEntry={!showPwd}
                         onBlur={validatePwd}
                     />
                     <TouchableOpacity
@@ -103,14 +110,14 @@ const Login = ({navigation}) => {
                         activeOpacity={1}
                         onPress={() => setShowPassword(!showPwd)}
                     >
-                        <Text style={[styles.errorText, { marginBottom: 0 }]}>
-                            {showPwd ? "SHOW" : "HIDE"}
+                        <Text style={[styles.errorText, { marginBottom: 0, color: '#65BDF2', }]}>
+                            {!showPwd ? "SHOW" : "HIDE"}
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginBottom: 10 }}>
                     {
-                        !isPasswordValid &&
+                        showPwdMsg &&
                         <Text style={styles.errorText}>
                             Password cannot be empty
                         </Text>
@@ -125,7 +132,7 @@ const Login = ({navigation}) => {
                     </Text>
                 </TouchableOpacity>
                 {
-                    !isValid &&
+                    showValidMsg &&
                     <Text style={[styles.errorText, { marginVertical: 15 }]}>
                         Invalid Credentials.
                     </Text>
@@ -175,7 +182,7 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 16,
         fontWeight: "bold",
-        color: '#65BDF2',
+        color: colors.logoRed,
         marginBottom: 15
     }
 })
