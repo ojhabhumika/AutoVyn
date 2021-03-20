@@ -5,8 +5,9 @@ import colors from '../../constants/Colors'
 import LottieView from 'lottie-react-native';
 import { parseISO, isToday, isYesterday } from 'date-fns'
 import { Text } from '@ui-kitten/components';
+import Loading from '../../components/Loading'
 
-const RequestList = ({ discountReqList, userNames, loading, setLoading }) => {
+const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoading, selectedIndex }) => {
 
     const [groupedList, setGroupedList] = useState([])
 
@@ -28,7 +29,7 @@ const RequestList = ({ discountReqList, userNames, loading, setLoading }) => {
             setGroupedList(groupBy)
             setLoading(false)
         }
-    }, []);
+    }, [selectedIndex, discountReqList]);
 
     // useEffect(() => {
     //     if (groupedList.length > 0 || discountReqList.length == 0) {
@@ -37,31 +38,23 @@ const RequestList = ({ discountReqList, userNames, loading, setLoading }) => {
     // }, [groupedList]);
 
     return (
-        <>
+        <View style={{flex:1}}>
             { loading ?
-               
-                <Text>Loading...</Text>
+                <Loading />
                 :
-                <ScrollView contentContainerStyle={{
-                    backgroundColor: "#F8F6F6",
-                    justifyContent: "center", alignItems: "center"
-                }}>
+                <ScrollView style={{ flex:1,paddingVertical:10}} showsVerticalScrollIndicator={false}>
                     {
                         groupedList.map(data => {
                             return (
                                 <>
                                     {data.list.length > 0 &&
                                         <>
-                                            <View style={styles.headerDiv}>
-                                                <Text style={styles.headingText}>
-                                                    {data.title}&nbsp;&nbsp;
-                                                </Text>
-                                            </View>
+                                                {/* <Text style={styles.headingText}>{data.title}</Text> */}
                                             {
                                                 data.list.map(e => <RequestCard
                                                     key={Math.random()}
                                                     requestData={e}
-                                                    bank={bankNames.find(bank => bank.code == e.bankId)}
+                                                    // bank={bankNames.find(bank => bank.code == e.bankId)}
                                                     user={userNames.find(user => user.code == e.discountRaisedById)}
                                                 />)
                                             }
@@ -72,9 +65,10 @@ const RequestList = ({ discountReqList, userNames, loading, setLoading }) => {
 
                         })
                     }
+                    <View style={{ marginBottom:20 }}/>
                 </ScrollView>
             }
-        </>
+        </View>
     )
 }
 
@@ -113,7 +107,7 @@ const RequestCard = ({ requestData, bank, user }) => {
         >
             <>
                 <View style={{ ...styles.cardTopRow }}>
-                    <View style={styles.mainDiv}>
+                    <View style={{marginLeft:2}}>
                         <Text style={styles.cardTopText}>#{reqId}</Text>
                         <Text style={styles.cardTopText}>{user?.userName}</Text>
                     </View>
@@ -159,55 +153,44 @@ export default RequestList
 const styles = StyleSheet.create({
 
     cardbg: {
-        width: "92%",
-        flexDirection: "column",
+        marginHorizontal:15,
+        marginTop:8,
         paddingVertical: 15,
+        paddingLeft:15,
         borderLeftWidth: 5,
         borderLeftColor: "#006400",
-        borderRightColor: "#C0C0C0",
-        borderTopColor: "#C0C0C0",
-        borderBottomColor: "#C0C0C0",
-        borderBottomWidth: 2,
         marginBottom: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        borderTopRightRadius:5,
+        borderBottomRightRadius:5,
+        shadowColor: "gray",
+        shadowOpacity: 0.5,
         elevation: 5,
     },
     cardTopRow: {
         flexDirection: "row",
         alignItems: "center",
-        paddingBottom: 10,
-        paddingLeft: 10,
+        marginBottom:5
     },
     cardRow: {
-        paddingLeft: 20,
-        color: "black",
         flexDirection: "row",
-        marginVertical: 5,
+        marginVertical: 3,
         alignItems: "center"
     },
     cardText: {
-        color: colors.text,
-        fontSize: 18,
+        color: 'gray',
+        fontSize: 16,
         paddingLeft: 10
     },
     cardTopText: {
-        fontSize: 20,
-        paddingLeft: 10,
+        fontSize: 18,
         fontWeight: "bold",
     },
     amountText: {
-        fontSize: 21,
+        fontSize: 20,
         color: colors.red,
         fontWeight: "bold",
-        paddingVertical: 5,
-        paddingLeft: 20,
-        paddingRight: 10
+        paddingVertical:6,
+        paddingHorizontal:20
     },
     amountTextDiv: {
         borderColor: '#C0C0C0',
@@ -216,24 +199,16 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 25,
         borderBottomLeftRadius: 25,
         backgroundColor: "#F8F6F6",
-        marginLeft: "auto"
-    },
-    mainDiv: {
-        flexDirection: "column",
+        marginLeft: "auto",
     },
     headerDiv: {
-        width: "92%",
-        flexDirection: 'row',
+        flex:1,
         alignItems: 'center',
-        paddingTop: 25,
-        paddingBottom: 15
+        padding: 15
     },
     headingText: {
         color: colors.text,
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'left'
-    },
-    divider: {
-        flex: 1, height: 1, backgroundColor: '#808080'
     }
 });

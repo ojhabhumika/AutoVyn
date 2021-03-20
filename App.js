@@ -7,15 +7,19 @@ import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/screens/Login'
 import ListIndex from './src/screens/DiscountRequest/ListIndex'
 import CreateRequest from './src/screens/DiscountRequest/CreateRequest'
+import Dashboard from './src/screens/Dashboard'
+import HomeNavigator from './src/HomeNavigator'
 
 export default function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
-        <Login />
+        {/* <Login /> */}
         {/* <ListIndex /> */}
         {/* <CreateRequest /> */}
+        {/* < Dashboard/> */}
+        <HomeNavigator />
       </ApplicationProvider>
     </>
   );

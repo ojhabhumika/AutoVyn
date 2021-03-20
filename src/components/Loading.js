@@ -1,9 +1,13 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
+import { View } from 'react-native';
 
 const Loading = () => {
     return (
+        <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+        <View style={{width:200,height:200}}>
         <LottieView
+            style={{alignItems:'center'}}
             source={require('../../assets/lottie/carLoading.json')}
             colorFilters={[{
                 keypath: "button",
@@ -12,11 +16,11 @@ const Loading = () => {
                 keypath: "Sending Loader",
                 color: "#F00000"
             }]}
-            height={100}
-            width={100}
             autoPlay
             loop
         />
+        </View>
+        </View>
     )
 }
 

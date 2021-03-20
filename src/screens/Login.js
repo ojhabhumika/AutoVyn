@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window')
 import colors from '../constants/Colors'
 import useRequest from '../hooks/useRequest';
 
-const Login = () => {
+const Login = ({navigation}) => {
 
     const { makeRequest } = useRequest();
     const [userName, setUserName] = useState()
@@ -30,6 +30,7 @@ const Login = () => {
     }
 
     const onSumbit = () => {
+        return navigation.navigate('Dashboard')
         validateUserName()
         validatePwd()
         if (isUserNameValid && isPasswordValid) {
