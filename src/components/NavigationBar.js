@@ -7,11 +7,9 @@ import { View,TouchableOpacity, Text } from 'react-native'
 const NavigationBar = ({title, menu, goBack,navigation,style}) => {
     return (
         <View style={{width: '100%',
-            backgroundColor:'orange',
+            backgroundColor:'#65BDF2',
             height:55,
-            // shadowColor:'gray',
-            // elevation:9,
-            // shadowOpacity:1,
+            ...style,
             flexDirection:'row',alignItems:'center'}}>
             {goBack && 
             <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
