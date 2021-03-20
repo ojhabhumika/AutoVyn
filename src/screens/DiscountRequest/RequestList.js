@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../constants/Colors'
-import LottieView from 'lottie-react-native';
 import { parseISO, isToday, isYesterday } from 'date-fns'
 import { Text } from '@ui-kitten/components';
 import Loading from '../../components/Loading'

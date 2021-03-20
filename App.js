@@ -1,13 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { StyleSheet, Text, View } from 'react-native';
-import Login from './src/screens/Login'
-import ListIndex from './src/screens/DiscountRequest/ListIndex'
-import CreateRequest from './src/screens/DiscountRequest/CreateRequest'
-import Dashboard from './src/screens/Dashboard'
+import { StyleSheet } from 'react-native';
+import { UserProvider } from './src/context/UserContext'
 import HomeNavigator from './src/HomeNavigator'
 
 export default function App() {
@@ -15,11 +11,9 @@ export default function App() {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
-        {/* <Login /> */}
-        {/* <ListIndex /> */}
-        {/* <CreateRequest /> */}
-        {/* < Dashboard/> */}
-        <HomeNavigator />
+        {/* <UserProvider> */}
+          <HomeNavigator />
+        {/* </UserProvider> */}
       </ApplicationProvider>
     </>
   );

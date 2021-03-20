@@ -67,7 +67,7 @@ const CreateRequest = () => {
             onSuccess: (res) => {
 
             },
-            onError: () => setLoading(false)
+            onFailure: () => setLoading(false)
         })
     }
 
@@ -140,7 +140,7 @@ const CreateRequest = () => {
                     onChangeText={text => setProposedDiscountAmt(text)}
                     defaultValue={proposedDiscountAmt}
                     underlineColorAndroid="transparent"
-                    keyboardType={"decimal-pad"}
+                    keyboardType={"number-pad"}
                 />
             </View>
 
@@ -153,7 +153,7 @@ const CreateRequest = () => {
                     onChangeText={text => setMgaAmount(text)}
                     defaultValue={mgaAmount}
                     underlineColorAndroid="transparent"
-                    keyboardType={"decimal-pad"}
+                    keyboardType={"number-pad"}
                 />
             </View>
 
@@ -237,7 +237,7 @@ const CreateRequest = () => {
                     defaultValue={loanAmount}
                     editable={isFinance}
                     underlineColorAndroid="transparent"
-                    keyboardType={"decimal-pad"}
+                    keyboardType={"number-pad"}
                 />
 
             </View>
