@@ -30,7 +30,6 @@ const Login = ({navigation}) => {
     }
 
     const onSumbit = () => {
-        return navigation.navigate('Dashboard')
         validateUserName()
         validatePwd()
         if (isUserNameValid && isPasswordValid) {
@@ -40,8 +39,7 @@ const Login = ({navigation}) => {
                 body: { userName, password },
                 onSuccess: (res) => {
                     setIsValid(true)
-                    console.log('res :>> ', res);
-                    //navigation
+                    navigation.navigate('Dashboard')
                     //setUser from context
                 },
                 onFailure: () => setIsValid(false)
@@ -103,7 +101,7 @@ const Login = ({navigation}) => {
                         activeOpacity={1}
                         onPress={() => setShowPassword(!showPwd)}
                     >
-                        <Text style={[styles.errorText, { marginBottom: 0 }]}>
+                        <Text style={[styles.errorText, { marginBottom: 0, color: '#65BDF2' }]}>
                             {showPwd ? "SHOW" : "HIDE"}
                         </Text>
                     </TouchableOpacity>
@@ -126,7 +124,7 @@ const Login = ({navigation}) => {
                 </TouchableOpacity>
                 {
                     !isValid &&
-                    <Text style={[styles.errorText, { marginVertical: 15 }]}>
+                    <Text style={{...styles.errorText, marginVertical: 15 }}>
                         Invalid Credentials.
                     </Text>
                 }
@@ -175,7 +173,7 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 16,
         fontWeight: "bold",
-        color: '#65BDF2',
+        color: colors.logoRed,
         marginBottom: 15
     }
 })
