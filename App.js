@@ -8,6 +8,7 @@ import Login from './src/screens/Login'
 import ListIndex from './src/screens/DiscountRequest/ListIndex'
 import CreateRequest from './src/screens/DiscountRequest/CreateRequest'
 import Dashboard from './src/screens/Dashboard'
+import HomeNavigator from './src/HomeNavigator'
 
 export default function App() {
   return (
@@ -17,7 +18,8 @@ export default function App() {
         {/* <Login /> */}
         {/* <ListIndex /> */}
         {/* <CreateRequest /> */}
-        <Dashboard />
+        {/* < Dashboard/> */}
+        <HomeNavigator />
       </ApplicationProvider>
     </>
   );
