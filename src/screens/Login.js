@@ -134,7 +134,7 @@ const Login = ({navigation}) => {
                 <TouchableOpacity style={{ paddingVertical: 60, alignItems: 'flex-start' }}>
                     <Text style={{ color: '#313131', fontSize: 18 }}>
                         Forgot your password?
-                        <Text style={{ color: colors.logoRed, fontSize: 18, fontWeight: "bold" }} > Reset here</Text>
+                        <Text style={{ color: '#65BDF2', fontSize: 18, fontWeight: "bold" }} > Reset here</Text>
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     login: {
-        backgroundColor: 'orange',
+        backgroundColor: '#65BDF2',
         padding: 15,
         marginTop: 15,
         alignItems: 'center',
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 16,
         fontWeight: "bold",
-        color: colors.logoRed,
+        color: '#65BDF2',
         marginBottom: 15
     }
 })

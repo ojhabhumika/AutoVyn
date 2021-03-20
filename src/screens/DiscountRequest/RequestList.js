@@ -48,7 +48,7 @@ const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoadin
                                 <>
                                     {data.list.length > 0 &&
                                         <>
-                                                {/* <Text style={styles.headingText}>{data.title}</Text> */}
+                                                <Text style={styles.headingText}>{data.title}</Text>
                                             {
                                                 data.list.map(e => <RequestCard
                                                     key={Math.random()}
@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     headingText: {
         color: colors.text,
         fontSize: 18,
-        textAlign: 'left'
+        textAlign: 'left',
+        paddingLeft: 15
     }
 });

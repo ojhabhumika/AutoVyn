@@ -10,15 +10,18 @@ import {
 } from 'react-native'
 const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import NavigationBar from '../components/NavigationBar'
 
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
 
     const data = [{
         "title": "Discount Approval",
-        "icon": <Icon name={'sale'} size={55} color={'#65BDF2'} />,
-        "text": "#65BDF2",
-        "bg": "#EFF8FD"
+        "icon": <Icon name={'sale'} size={55} color={'#339989'} />,
+        // "text": "#65BDF2",
+        // "bg": "#EFF8FD"
+        "text": "#339989",
+        "bg": "#e7f7f5"
 
     },
     {
@@ -54,37 +57,29 @@ const Dashboard = () => {
 
     return (
         <Layout style={styles.container}>
-            <NavigationBar />
+            <NavigationBar style={ { shadowColor:'gray',elevation:9, shadowOpacity:1 }}/>
             <View style={styles.listContainer}>
                 <FlatList
                     data={data}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={2}
                     renderItem={({ item }) => (
-                        <ListItem item={item} />
+                        <ListItem item={item} navigation={navigation}/>
                     )} />
             </View>
         </Layout>
     )
 }
 
-const NavigationBar = () => {
-    return (
-        <View style={styles.toolbar}>
-            <Text style={{ flex: 1 }}></Text>
-            <TouchableOpacity style={{ padding: 15 }}>
-                <Text style={{ flex: 1, color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
-                    {/* Log Out */}
-                </Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
 
-const ListItem = ({ item }) => {
+
+const ListItem = ({ item, navigation }) => {
 
     return (
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity 
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('ListIndex')}
+        style={styles.item}>
             <View style={{
                 backgroundColor: item.bg,
                 padding: 20,
