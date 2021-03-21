@@ -4,6 +4,7 @@ import {
     Icon
 } from '@ui-kitten/components';
 import { View, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Text } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 const { width } = Dimensions.get('window')
 import colors from '../constants/Colors'
 import useRequest from '../hooks/useRequest';
