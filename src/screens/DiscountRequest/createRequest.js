@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Pressable, TextInput, ImageBackgroundBase } from 'react-native';
+import { StyleSheet, View, Pressable, TextInput, ImageBackgroundBase, ScrollView } from 'react-native';
 import colors from '../../constants/Colors'
 import { CheckBox } from '@ui-kitten/components';
 import {
@@ -8,8 +8,10 @@ import {
 } from '@ui-kitten/components';
 import useRequest from '../../hooks/useRequest';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import NavigationBar from '../../components/NavigationBar'
 
-const CreateRequest = () => {
+
+const CreateRequest = ({navigation}) => {
 
     const { makeRequest } = useRequest();
 
@@ -93,8 +95,11 @@ const CreateRequest = () => {
 
 
     return (
-        <View style={styles.formView}>
-
+        <View style={{flex:1,backgroundColor:'#fff'}}>
+            <NavigationBar navigation={navigation} menu={'logout'} goBack hide style={ { shadowColor:'gray',elevation:9, shadowOpacity:1 }}/>
+       
+        <ScrollView style={styles.formView} showsVerticalScrollIndicator={false}>
+            
             <View style={styles.inputView}>
                 <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
                 <TextInput
@@ -161,17 +166,16 @@ const CreateRequest = () => {
                 <Select
                     selectedIndex={selectedIndex}
                     onSelect={index => setSelectedIndex(index)}
-                    style={[styles.inputView, {
+                    style={{
                         backgroundColor: "white",
                         borderColor: "white",
-                        paddingLeft: 0,
-                        borderWidth: 0,
-                        borderBottomColor: "gray",
+                        borderWidth: 0.5,
                         marginRight: "auto",
-                        paddingLeft: 0,
                         fontSize: 18,
-                    }
-                    ]}
+                        marginBottom: 20,
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}
                 >
                     <SelectItem title='Option 7' />
                     <SelectItem title='Option 2' />
@@ -241,15 +245,14 @@ const CreateRequest = () => {
                 />
 
             </View>
-
-            <TouchableOpacity style={{
-                marginBottom: 0, width: "100%", color: colors.logoBlue
+            <View style={{margin:10}}/>
+        </ScrollView >
+        <TouchableOpacity style={{padding:15,alignItems:'center', width: "100%", backgroundColor:colors.logoBlue, shadowColor:'gray',shadowOpacity:0.5,elevation:6
             }}>
-                <Text>SEND REQUEST</Text>
+                <Text style={{color: '#fff',fontWeight:'bold',fontSize:18}}>SEND REQUEST</Text>
             </TouchableOpacity>
-
-        </View >
-    )
+        </View>
+        )
 }
 
 export default CreateRequest
@@ -258,8 +261,8 @@ const styles = StyleSheet.create({
 
     formView: {
         flex: 1,
-        margin: 25,
-        justifyContent: 'flex-start'
+        marginHorizontal: 25,
+        paddingTop:20
     },
     inputIcon: {
         padding: 10,
@@ -271,7 +274,7 @@ const styles = StyleSheet.create({
     },
     inputView: {
         borderBottomColor: 'gray',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center'

@@ -34,7 +34,6 @@ const Login = ({ navigation }) => {
     }
 
     const onSumbit = () => {
-
         validateUserName()
         validatePwd()
         setShowValidMsg(false)

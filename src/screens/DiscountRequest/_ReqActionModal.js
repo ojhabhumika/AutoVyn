@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
-import { Text, Button, ButtonGroup } from '@ui-kitten/components';
+import { Text, Button, ButtonGroup, Modal } from '@ui-kitten/components';
 
-const ActionModal = ({ reqId, status, proposedAmt = 5000 }) => {
+const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
 
     const { makeRequest } = useRequest();
 
@@ -37,60 +37,78 @@ const ActionModal = ({ reqId, status, proposedAmt = 5000 }) => {
     }
 
     return (
-        <View style={{ flex: 1, margin: 30 }}>
+        <Modal
+        visible={show}
+            backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+            onBackdropPress={hide} >
+            <View style={{ padding: 15,backgroundColor:'#fff',borderRadius:6,shadowColor:'gray', elevation:6 }}>
+            <Text style={{marginHorizontal:5, color:'313131'}}>Allowed discount should be less than {proposedAmt} </Text>
+{
+    
+    status != true &&
+    
+    <View style={{ flexDirection: "row" }}>
+        <TextInput
+            style={styles.input}
+            placeholder="Allowed Discount Amount"
+            placeholderTextColor={colors.text}
+            focusable={true}
+            onChangeText={text => setDiscount(Number(text) ?? 0)}
+            value={`${discount ?? 0}`}
+            defaultValue={`${discount ?? 0}`}
+            onBlur={checkDiscount}
+            keyboardType={"number-pad"}
+        />
 
-            {
-                status != true &&
-                <View style={{ flexDirection: "row" }}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Allowed Discount Amount"
-                        placeholderTextColor={colors.text}
-                        onChangeText={text => setDiscount(Number(text) ?? 0)}
-                        value={`${discount ?? 0}`}
-                        defaultValue={`${discount ?? 0}`}
-                        onBlur={checkDiscount}
-                        keyboardType={"number-pad"}
-                    />
+        {/* <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
+            <Button
+                onPress={() => setDiscount(prev => prev + 500)}
+                disabled={discount >= proposedAmt}>+
+            </Button>
+            <Button
+                onPress={() => setDiscount(prev => prev - 500)}
+                disabled={discount <= 0}>-
+            </Button>
+        </ButtonGroup> */}
+    </View>
+}
 
-                    <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
-                        <Button
-                            onPress={() => setDiscount(prev => prev + 500)}
-                            disabled={discount >= proposedAmt}>+
-                        </Button>
-                        <Button
-                            onPress={() => setDiscount(prev => prev - 500)}
-                            disabled={discount <= 0}>-
-                        </Button>
-                    </ButtonGroup>
-                </View>
-            }
+{
+    !isDiscountValid &&
+    (discount > proposedAmt ? <Text style={{marginHorizontal:10, color:'red'}}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{marginHorizontal:10, color:'red'}}>Invalid value</Text>)
+}
 
-            {
-                !isDiscountValid &&
-                (discount > proposedAmt ? <Text>Allowed discount should be less than ${proposedAmt} </Text> : <Text>Invalid value</Text>)
-            }
+<TextInput
+    style={styles.input}
+    placeholder="Enter remarks (optional)"
+    placeholderTextColor={colors.text}
+    onChangeText={text => setRemarks(text)}
+    defaultValue={remarks}
+    multiline={true}
+    underlineColorAndroid="transparent"
+/>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Remarks"
-                placeholderTextColor={colors.text}
-                onChangeText={text => setRemarks(text)}
-                defaultValue={remarks}
-                multiline={true}
-                underlineColorAndroid="transparent"
-            />
+<View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginVertical:10}}>
+<TouchableOpacity
+    onPress={onSubmit}
+    activeOpacity={0.8}
+    style={{ margin: 10,padding:12,backgroundColor:'green',width:'40%',borderRadius:24 }}
+>
+    <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>Accept</Text>
+</TouchableOpacity>
+<TouchableOpacity
+    onPress={onSubmit}
+    activeOpacity={0.8}
+    style={{ margin: 10, padding:12,backgroundColor:'red',width:'40%',borderRadius:24 }}
+>
+    <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>Reject</Text>
+</TouchableOpacity>
+</View>
 
-            <TouchableOpacity
-                onPress={onSubmit}
-                activeOpacity={0.8}
-                style={{ margin: 10 }}
-            >
-                <Text>SAVE</Text>
-            </TouchableOpacity>
+</View >
 
-        </View >
-    );
+        </Modal>
+        );
 }
 
 export default ActionModal;
@@ -99,8 +117,10 @@ const styles = StyleSheet.create({
 
     input: {
         color: "#505050",
-        fontSize: 18,
-        marginHorizontal: 5,
+        fontSize: 16,
+        margin:10,
+        borderWidth:0.5,
+        flex:1
     },
 
 })
