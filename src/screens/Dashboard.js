@@ -124,8 +124,7 @@ const ListItem = ({ item }) => {
                 {item.icon}
             </View>
             <Text style={{
-                paddingVertical: 10, color: item.text,
-                paddingTop: 15,
+                paddingTop: 10, color: item.text,
                 fontSize: 18, fontWeight: 'bold', textAlign: 'center'
             }}>
                 {item.title}
