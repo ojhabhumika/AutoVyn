@@ -11,7 +11,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import NavigationBar from '../../components/NavigationBar'
 
 
-const CreateRequest = ({navigation}) => {
+const CreateRequest = ({ navigation }) => {
 
     const { makeRequest } = useRequest();
 
@@ -95,117 +95,117 @@ const CreateRequest = ({navigation}) => {
 
 
     return (
-        <View style={{flex:1,backgroundColor:'#fff'}}>
-            <NavigationBar navigation={navigation} menu={'logout'} goBack hide style={ { shadowColor:'gray',elevation:9, shadowOpacity:1 }}/>
-       
-        <ScrollView style={styles.formView} showsVerticalScrollIndicator={false}>
-            
-            <View style={styles.inputView}>
-                <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Customer Name"
-                    placeholderTextColor={colors.text}
-                    onChangeText={text => setCustomerName(text)}
-                    defaultValue={customerName}
-                    underlineColorAndroid="transparent"
-                />
-            </View>
-            <View style={styles.inputView}>
-                <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Customer Phone"
-                    placeholderTextColor={colors.text}
-                    onChangeText={text => setCustomerPhone(text)}
-                    defaultValue={customerPhone}
-                    underlineColorAndroid="transparent"
-                    keyboardType={"phone-pad"}
-                />
-            </View>
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <NavigationBar navigation={navigation} menu={'logout'} goBack hide style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }} />
 
-            <View style={styles.inputView}>
-                <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Car Variant"
-                    placeholderTextColor={colors.text}
-                    onChangeText={text => setCarVariant(text)}
-                    defaultValue={carVariant}
-                    underlineColorAndroid="transparent"
-                />
-            </View>
+            <ScrollView style={styles.formView} showsVerticalScrollIndicator={false}>
 
-            <View style={styles.inputView}>
-                <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Proposed Discount Amount"
-                    placeholderTextColor={colors.text}
-                    onChangeText={text => setProposedDiscountAmt(text)}
-                    defaultValue={proposedDiscountAmt}
-                    underlineColorAndroid="transparent"
-                    keyboardType={"number-pad"}
-                />
-            </View>
+                <View style={styles.inputView}>
+                    <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Customer Name"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setCustomerName(text)}
+                        defaultValue={customerName}
+                        underlineColorAndroid="transparent"
+                    />
+                </View>
+                <View style={styles.inputView}>
+                    <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Customer Phone"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setCustomerPhone(text)}
+                        defaultValue={customerPhone}
+                        underlineColorAndroid="transparent"
+                        keyboardType={"phone-pad"}
+                    />
+                </View>
 
-            <View style={styles.inputView}>
-                <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="MGA/NGA Amount"
-                    placeholderTextColor={colors.text}
-                    onChangeText={text => setMgaAmount(text)}
-                    defaultValue={mgaAmount}
-                    underlineColorAndroid="transparent"
-                    keyboardType={"number-pad"}
-                />
-            </View>
+                <View style={styles.inputView}>
+                    <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Car Variant"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setCarVariant(text)}
+                        defaultValue={carVariant}
+                        underlineColorAndroid="transparent"
+                    />
+                </View>
 
-            <View>
-                <Select
-                    selectedIndex={selectedIndex}
-                    onSelect={index => setSelectedIndex(index)}
-                    style={{
-                        backgroundColor: "white",
-                        borderColor: "white",
-                        borderWidth: 0.5,
-                        marginRight: "auto",
-                        fontSize: 18,
-                        marginBottom: 20,
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                >
-                    <SelectItem title='Option 7' />
-                    <SelectItem title='Option 2' />
-                    <SelectItem title='Option 3' />
-                </Select>
-            </View>
+                <View style={styles.inputView}>
+                    <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Proposed Discount Amount"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setProposedDiscountAmt(text)}
+                        defaultValue={proposedDiscountAmt}
+                        underlineColorAndroid="transparent"
+                        keyboardType={"number-pad"}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="MGA/NGA Amount"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setMgaAmount(text)}
+                        defaultValue={mgaAmount}
+                        underlineColorAndroid="transparent"
+                        keyboardType={"number-pad"}
+                    />
+                </View>
+
+                <View>
+                    <Select
+                        selectedIndex={selectedIndex}
+                        onSelect={index => setSelectedIndex(index)}
+                        style={{
+                            backgroundColor: "white",
+                            borderColor: "white",
+                            borderWidth: 0.5,
+                            marginRight: "auto",
+                            fontSize: 18,
+                            marginBottom: 20,
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <SelectItem title='Option 7' />
+                        <SelectItem title='Option 2' />
+                        <SelectItem title='Option 3' />
+                    </Select>
+                </View>
 
 
-            <View style={styles.checkBoxView}>
-                <CheckBox
-                    checked={isMSIL_Ew}
-                    onChange={nextChecked => setIsMSIL_Ew(nextChecked)}>
-                    <Text style={styles.input}>MSIL-EW?</Text>
-                </CheckBox>
+                <View style={styles.checkBoxView}>
+                    <CheckBox
+                        checked={isMSIL_Ew}
+                        onChange={nextChecked => setIsMSIL_Ew(nextChecked)}>
+                        <Text style={styles.input}>MSIL-EW?</Text>
+                    </CheckBox>
 
-                <CheckBox
-                    style={{ marginLeft: 50 }}
-                    checked={isR_Ew}
-                    onChange={nextChecked => setIsR_Ew(nextChecked)}>
-                    <Text style={styles.input}>R-EW?</Text>
-                </CheckBox>
-            </View>
+                    <CheckBox
+                        style={{ marginLeft: 50 }}
+                        checked={isR_Ew}
+                        onChange={nextChecked => setIsR_Ew(nextChecked)}>
+                        <Text style={styles.input}>R-EW?</Text>
+                    </CheckBox>
+                </View>
 
-            <View style={styles.checkBoxView}>
+                <View style={styles.checkBoxView}>
 
-                <CheckBox
-                    checked={isFinance}
-                    onChange={nextChecked => setIsFinance(nextChecked)}>
-                    <Text style={styles.input}>
-                        Will customer finance the car?
+                    <CheckBox
+                        checked={isFinance}
+                        onChange={nextChecked => setIsFinance(nextChecked)}>
+                        <Text style={styles.input}>
+                            Will customer finance the car?
                     </Text>
                 </CheckBox>
             </View>
@@ -249,7 +249,7 @@ const CreateRequest = ({navigation}) => {
                 <Text style={{color: '#fff',fontWeight:'bold',fontSize:18}}>SEND REQUEST</Text>
             </TouchableOpacity>
         </View>
-        )
+    )
 }
 
 export default CreateRequest
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     formView: {
         flex: 1,
         marginHorizontal: 25,
-        paddingTop:20
+        paddingTop: 20
     },
     inputIcon: {
         padding: 10,
