@@ -13,7 +13,6 @@ import UserContext from '../context/UserContext'
 const Login = ({ navigation }) => {
 
     const { makeRequest } = useRequest();
-    const { setUser } = useContext(UserContext)
 
     const [userName, setUserName] = useState()
     const [password, setPassword] = useState()
@@ -39,14 +38,14 @@ const Login = ({ navigation }) => {
         setShowValidMsg(false)
 
         if (userName && password) {
-            console.log("api called");
             makeRequest({
                 url: '/login',
                 method: 'POST',
                 body: { userName, password },
                 onSuccess: async (res) => {
-                    setUser(res)
+                    
                     await AsyncStorage.setItem('@token', res.token)
+                    await AsyncStorage.setItem('@user', JSON.stringify(res))
                     navigation.navigate('Dashboard')
                 },
                 onFailure: () => setShowValidMsg(true)

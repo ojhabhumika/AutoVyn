@@ -29,7 +29,8 @@ const NavigationBar = ({title, menu, goBack,navigation,style, hide}) => {
                 style={{padding:10}}
                 onPress={onPress}>
                 {
-                    menu == "logout" ? <Icon name='more-vertical-outline' width={30} height={30} fill={'#fff'}/> : <Icon name='plus-outline' width={30} height={30} fill={'#fff'}/>
+                    menu == "logout" ? <Icon name='more-vertical-outline' width={30} height={30} fill={'#fff'}/>
+                     : <Icon name='plus-circle-outline' width={30} height={30} fill={'#fff'}/>
                 }
                 
             </TouchableOpacity>}
