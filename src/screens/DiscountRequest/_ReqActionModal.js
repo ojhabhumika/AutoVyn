@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
-import { Text, Button, ButtonGroup, Modal } from '@ui-kitten/components';
+import { Text, Button, ButtonGroup, Modal, Icon } from '@ui-kitten/components';
 
 const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
 
@@ -42,7 +42,13 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
             backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
             onBackdropPress={hide} >
             <View style={{ padding: 15,backgroundColor:'#fff',borderRadius:6,shadowColor:'gray', elevation:6 }}>
-            <Text style={{marginHorizontal:5, color:'313131'}}>Allowed discount should be less than {proposedAmt} </Text>
+            <TouchableOpacity
+                onPress={hide}
+                style={{position:'absolute',right:15,top:15}}
+                activeOpacity={0.8}>
+            <Icon name="close-outline" fill={'gray'} width={30} height={30} />
+            </TouchableOpacity>
+            <Text style={{marginHorizontal:10, color:'313131',marginTop:50,marginBottom:20}}>Allowed discount should be less than {proposedAmt} </Text>
 {
     
     status != true &&
@@ -92,17 +98,17 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
 <TouchableOpacity
     onPress={onSubmit}
     activeOpacity={0.8}
-    style={{ margin: 10,padding:12,backgroundColor:'green',width:'40%',borderRadius:24 }}
+    style={{ margin: 10,padding:12,backgroundColor:'#65BDF2',width:'40%',borderRadius:24 }}
 >
-    <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>Accept</Text>
+    <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>SAVE</Text>
 </TouchableOpacity>
-<TouchableOpacity
+{/* <TouchableOpacity
     onPress={onSubmit}
     activeOpacity={0.8}
     style={{ margin: 10, padding:12,backgroundColor:'red',width:'40%',borderRadius:24 }}
 >
     <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>Reject</Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 </View>
 
 </View >
@@ -120,7 +126,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         margin:10,
         borderWidth:0.5,
-        flex:1
+        flex:1,
+        borderRadius:5
     },
 
 })

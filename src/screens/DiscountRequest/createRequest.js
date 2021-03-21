@@ -217,18 +217,15 @@ const CreateRequest = ({navigation}) => {
                     value={selectedBank}
                     onSelect={onBankSelect}
                     onChangeText={onBankChangeText}
-                    style={[styles.inputView, styles.input, {
+                    style={[styles.inputView, {
                         backgroundColor: "white",
                         borderColor: "white",
-                        paddingLeft: 0,
-                        borderBottomColor: "gray",
-                        marginRight: "auto",
-                        paddingLeft: 0,
-                        fontSize: 18,
+                        color: "#505050",
+                        fontSize: 16,
+                        flex:1
                     }
                     ]}
-                >
-                    {banks.map(bankRenderOption)}
+                >{banks.map(bankRenderOption)}
                 </Autocomplete>
             </View>
 
@@ -269,11 +266,11 @@ const styles = StyleSheet.create({
     },
     input: {
         color: "#505050",
-        fontSize: 18,
+        fontSize: 16,
         marginHorizontal: 5,
     },
     inputView: {
-        borderBottomColor: 'gray',
+        // borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
         marginBottom: 20,
         flexDirection: 'row',

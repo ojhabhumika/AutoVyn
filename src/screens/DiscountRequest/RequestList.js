@@ -6,6 +6,7 @@ import { parseISO, isToday, isYesterday } from 'date-fns'
 import { Text } from '@ui-kitten/components';
 import Loading from '../../components/Loading'
 import ActionModal from './_ReqActionModal'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoading, selectedIndex }) => {
 
@@ -84,28 +85,27 @@ const RequestCard = ({ requestData, bank, user }) => {
         : (status == true ? colors.lightGreen : colors.lightRed)
 
     return (
-        <Pressable
-            onPress={() => {
-               setShowModal(true) 
-            }}
-            style={({ pressed }) => [
-                styles.cardbg,
-                {
-                    backgroundColor: pressed
-                        ? getLightColor
-                        : '#FFF',
-                },
-                {
-                    borderLeftColor: (status == null)
-                        ? colors.logoBlue
-                        : (status == true ? colors.green : colors.logoRed)
+        <TouchableOpacity
+            activeOpacity={1}
+            style={styles.cardbg}
+            // style={({ pressed }) => [
+            //     styles.cardbg,
+            //     {
+            //         backgroundColor: pressed
+            //             ? getLightColor
+            //             : '#FFF',
+            //     },
+            //     {
+            //         borderLeftColor: (status == null)
+            //             ? colors.logoBlue
+            //             : (status == true ? colors.green : colors.logoRed)
 
-                    //   Processing  : blue 
-                    //   Accepted    : green
-                    //   Rejected    : red
-                }
-            ]}
-            android_ripple={{ color: getLightColor, borderless: false }}
+            //         //   Processing  : blue 
+            //         //   Accepted    : green
+            //         //   Rejected    : red
+            //     }
+            // ]}
+            // android_ripple={{ color: getLightColor, borderless: false }}
         >
             <>
                 <View style={{ ...styles.cardTopRow }}>
@@ -143,10 +143,20 @@ const RequestCard = ({ requestData, bank, user }) => {
                     <Text style={styles.cardText}>
                         {isMSILEw && "MSILEW |"} {IsREw && "REW | "}MGA/NGA ₹{accessoriesAmt}
                     </Text>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => setShowModal(true) }>
+                    <Icon name="checkmark-circle" size={35} color={'#65BDF2'} />
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        activeOpacity={0.8}
+                        onPress={() => {setShowModal(true)} }>
+                    <Icon name="close-circle" size={35} color={'#65BDF2'}  style={{marginHorizontal:15}}/>
+                    </TouchableOpacity>
                 </View>
             </>
             < ActionModal reqId={reqId} status={status}  hide={() => setShowModal(false)} show={showModal}/>
-        </Pressable >
+        </TouchableOpacity >
     )
 }
 
@@ -168,6 +178,7 @@ const styles = StyleSheet.create({
         shadowColor: "gray",
         shadowOpacity: 0.5,
         elevation: 5,
+        backgroundColor:'#fff'
     },
     cardTopRow: {
         flexDirection: "row",
