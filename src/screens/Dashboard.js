@@ -14,11 +14,11 @@ const Dashboard = ({ navigation }) => {
 
     const data = [{
         "title": "Discount Approval",
-        "icon": <Icon name={'sale'} size={55} color={'#339989'} />,
+        "icon": <Icon name={'sale'} size={55} color={'#E680AA'} />,
         // "text": "#65BDF2",
         // "bg": "#EFF8FD"
-        "text": "#339989",
-        "bg": "#e7f7f5"
+        "text": "#E680AA",
+        "bg": "#FCF2F6"
 
     },
     {
@@ -29,9 +29,9 @@ const Dashboard = ({ navigation }) => {
     },
     {
         "title": "Sales",
-        "icon": <Icon name={'finance'} size={55} color={'#E680AA'} />,
-        "text": "#E680AA",
-        "bg": "#FCF2F6"
+        "icon": <Icon name={'finance'} size={55} color={'#37c65b'} />,
+        "text": "#37c65b",
+        "bg": "#ebfbef"
     },
     {
         "title": "Service",
@@ -47,9 +47,9 @@ const Dashboard = ({ navigation }) => {
     },
     {
         "title": "MIS",
-        "icon": <Icon name={'file-chart'} size={55} color={'#37c65b'} />,
-        "text": "#37c65b",
-        "bg": "#ebfbef"
+        "icon": <Icon name={'file-chart'} size={55} color={'#339989'} />,
+        "text": "#339989",
+        "bg": "#e7f7f5"
     }]
 
     return (
@@ -85,8 +85,7 @@ const ListItem = ({ item, navigation }) => {
                 {item.icon}
             </View>
             <Text style={{
-                paddingVertical: 10, color: item.text,
-                paddingTop: 15,
+                paddingTop: 10, color: item.text,
                 fontSize: 18, fontWeight: 'bold', textAlign: 'center'
             }}>
                 {item.title}
