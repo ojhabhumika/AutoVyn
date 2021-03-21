@@ -8,35 +8,30 @@ import Loading from '../../components/Loading'
 import ActionModal from './_ReqActionModal'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const RequestList = ({ discountReqList, userNames, loading, setLoading, selectedIndex }) => {
+const RequestList = ({ filteredList, userNames, loading, setLoading, selectedIndex }) => {
 
     const [groupedList, setGroupedList] = useState([])
 
     useEffect(() => {
-        //setLoading(true)
-        if (discountReqList.length > 0) {
+        setGroupedList([])
+        if (filteredList.length > 0) {
             const groupBy = [{
                 title: "TODAY",
-                list: discountReqList.filter(x => isToday(parseISO(x.createdAt)))
+                list: filteredList.filter(x => isToday(parseISO(x.createdAt)))
             },
             {
                 title: "YESTERDAY",
-                list: discountReqList.filter(x => isYesterday(parseISO(x.createdAt)))
+                list: filteredList.filter(x => isYesterday(parseISO(x.createdAt)))
             },
             {
                 title: "OLDER",
-                list: discountReqList.filter(x => !isToday(parseISO(x.createdAt)) && !isYesterday(parseISO(x.createdAt)))
+                list: filteredList.filter(x => !isToday(parseISO(x.createdAt)) && !isYesterday(parseISO(x.createdAt)))
             }]
             setGroupedList(groupBy)
             setLoading(false)
         }
-    }, [selectedIndex, discountReqList]);
+    }, [selectedIndex, filteredList]);
 
-    // useEffect(() => {
-    //     if (groupedList.length > 0 || discountReqList.length == 0) {
-
-    //     }
-    // }, [groupedList]);
 
     return (
         <View style={{ flex: 1 }}>
@@ -45,25 +40,35 @@ const RequestList = ({ discountReqList, userNames, loading, setLoading, selected
                 :
                 <ScrollView style={{ flex: 1, paddingVertical: 10 }} showsVerticalScrollIndicator={false}>
                     {
-                        groupedList.map(data => {
-                            return (
-                                <>
-                                    {data.list.length > 0 &&
+                        groupedList.length > 0 ?
+                            (
+
+                                groupedList.map(data => {
+                                    return (
                                         <>
-                                            <Text style={styles.headingText}>{data.title}</Text>
-                                            {
-                                                data.list.map(e => <RequestCard
-                                                    key={Math.random()}
-                                                    requestData={e}
-                                                    user={userNames.find(user => user.code == e.discountRaisedById)}
-                                                />)
+                                            {data.list.length > 0 &&
+                                                <>
+                                                    <Text style={styles.headingText}>{data.title}</Text>
+                                                    {
+                                                        data.list.map(e => <RequestCard
+                                                            key={Math.random()}
+                                                            requestData={e}
+                                                            user={userNames.find(user => user.code == e.discountRaisedById)}
+                                                        />)
+                                                    }
+                                                </>
                                             }
                                         </>
-                                    }
-                                </>
-                            )
+                                    )
 
-                        })
+                                })
+                            )
+                            :
+                            <Text style={{
+                                fontSize: 20,
+                                alignSelf: "center",
+                                paddingTop: 15
+                            }}>No Requests.</Text>
                     }
                     <View style={{ marginBottom: 20 }} />
                 </ScrollView>
@@ -77,7 +82,7 @@ const RequestCard = ({ requestData, user }) => {
     const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
         isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
 
-        const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const getLightColor = status == null
         ? colors.lightBlue
@@ -87,24 +92,24 @@ const RequestCard = ({ requestData, user }) => {
         <TouchableOpacity
             activeOpacity={1}
             style={styles.cardbg}
-            // style={({ pressed }) => [
-            //     styles.cardbg,
-            //     {
-            //         backgroundColor: pressed
-            //             ? getLightColor
-            //             : '#FFF',
-            //     },
-            //     {
-            //         borderLeftColor: (status == null)
-            //             ? colors.logoBlue
-            //             : (status == true ? colors.green : colors.logoRed)
+        // style={({ pressed }) => [
+        //     styles.cardbg,
+        //     {
+        //         backgroundColor: pressed
+        //             ? getLightColor
+        //             : '#FFF',
+        //     },
+        //     {
+        //         borderLeftColor: (status == null)
+        //             ? colors.logoBlue
+        //             : (status == true ? colors.green : colors.logoRed)
 
-            //         //   Processing  : blue 
-            //         //   Accepted    : green
-            //         //   Rejected    : red
-            //     }
-            // ]}
-            // android_ripple={{ color: getLightColor, borderless: false }}
+        //         //   Processing  : blue 
+        //         //   Accepted    : green
+        //         //   Rejected    : red
+        //     }
+        // ]}
+        // android_ripple={{ color: getLightColor, borderless: false }}
         >
             <>
                 <View style={{ ...styles.cardTopRow }}>
@@ -144,17 +149,17 @@ const RequestCard = ({ requestData, user }) => {
                     </Text>
                     <TouchableOpacity
                         activeOpacity={0.8}
-                        onPress={() => setShowModal(true) }>
-                    <Icon name="checkmark-circle" size={35} color={'#65BDF2'} />
+                        onPress={() => setShowModal(true)}>
+                        <Icon name="checkmark-circle" size={35} color={'#65BDF2'} />
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         activeOpacity={0.8}
-                        onPress={() => {setShowModal(true)} }>
-                    <Icon name="close-circle" size={35} color={'#65BDF2'}  style={{marginHorizontal:15}}/>
+                        onPress={() => { setShowModal(true) }}>
+                        <Icon name="close-circle" size={35} color={'#65BDF2'} style={{ marginHorizontal: 15 }} />
                     </TouchableOpacity>
                 </View>
             </>
-            < ActionModal reqId={reqId} status={status}  hide={() => setShowModal(false)} show={showModal}/>
+            < ActionModal reqId={reqId} status={status} hide={() => setShowModal(false)} show={showModal} />
         </TouchableOpacity >
     )
 }
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
         shadowColor: "gray",
         shadowOpacity: 0.5,
         elevation: 5,
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     },
     cardTopRow: {
         flexDirection: "row",
@@ -190,7 +195,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     cardText: {
-        flex:1,
+        flex: 1,
         color: 'gray',
         fontSize: 16,
         paddingLeft: 10
@@ -221,6 +226,7 @@ const styles = StyleSheet.create({
         color: colors.text,
         fontSize: 18,
         textAlign: 'left',
-        paddingLeft: 15
+        paddingLeft: 15,
+        marginTop: 15
     }
 });

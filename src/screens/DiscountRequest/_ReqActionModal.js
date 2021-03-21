@@ -48,7 +48,7 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
                 activeOpacity={0.8}>
             <Icon name="close-outline" fill={'gray'} width={30} height={30} />
             </TouchableOpacity>
-            <Text style={{marginHorizontal:10, color:'313131',marginTop:50,marginBottom:20}}>Allowed discount should be less than {proposedAmt} </Text>
+            <Text style={{marginHorizontal:10, color:'#313131',marginTop:50,marginBottom:20}}>Allowed discount should be less than {proposedAmt} </Text>
 {
     
     status != true &&

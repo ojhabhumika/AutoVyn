@@ -18,7 +18,6 @@ const HomeNavigator = () => {
         (async () => {
             const token = await AsyncStorage.getItem('@token')
             setToken(token)
-            console.log('token :>> ', token);
         })();
     }, []);
 

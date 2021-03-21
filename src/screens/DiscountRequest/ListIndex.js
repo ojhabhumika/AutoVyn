@@ -3,14 +3,14 @@ import { StyleSheet, TouchableOpacity, View, Text, Dimensions } from 'react-nati
 import useRequest from '../../hooks/useRequest';
 import RequestList from './RequestList'
 import NavigationBar from '../../components/NavigationBar'
-
 const { width } = Dimensions.get('window')
 const ListIndex = ({ navigation }) => {
 
     const { makeRequest } = useRequest();
 
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [discountReqList, setDiscountReqList] = useState([])
+    const [filteredList, setFilteredList] = useState([])
     const [userNames, setUserNames] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -20,12 +20,32 @@ const ListIndex = ({ navigation }) => {
             url: '/discountRequests',
             method: 'GET',
             onSuccess: (res) => {
+                console.log('res :>> ', res);
                 setDiscountReqList(res.userRequests);
                 setUserNames(res.userNames)
             },
             onError: () => setLoading(false)
         })
     }, []);
+
+    useEffect(() => {
+        console.log('selectedIndex :>> ', selectedIndex);
+        if (discountReqList.length > 0) {
+            if (selectedIndex == 0) {
+                let data = discountReqList.filter(e => e.status === null)
+                return setFilteredList(data)
+            }
+            if (selectedIndex == 1) {
+                let data = discountReqList.filter(e => e.status === true)
+                return setFilteredList(data)
+            }
+            if (selectedIndex == 2) {
+                let data = discountReqList.filter(e => !(e.status === null || e.status == true))
+                return setFilteredList(data)
+            }
+        }
+
+    }, [discountReqList, selectedIndex]);
 
 
     return (
@@ -35,7 +55,7 @@ const ListIndex = ({ navigation }) => {
                 <TabBarView selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
             </View>
             <RequestList
-                discountReqList={discountReqList.filter(e => e.status === (selectedIndex == 0 ? null : (selectedIndex == 1 ? true : !(null || true))))}
+                filteredList={filteredList}
                 userNames={userNames}
                 loading={loading}
                 setLoading={setLoading}
