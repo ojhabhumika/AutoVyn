@@ -6,7 +6,7 @@ import { parseISO, isToday, isYesterday } from 'date-fns'
 import { Text } from '@ui-kitten/components';
 import Loading from '../../components/Loading'
 
-const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoading, selectedIndex }) => {
+const RequestList = ({ discountReqList, userNames, loading, setLoading, selectedIndex }) => {
 
     const [groupedList, setGroupedList] = useState([])
 
@@ -32,28 +32,27 @@ const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoadin
 
     // useEffect(() => {
     //     if (groupedList.length > 0 || discountReqList.length == 0) {
-           
+
     //     }
     // }, [groupedList]);
 
     return (
-        <View style={{flex:1}}>
+        <View style={{ flex: 1 }}>
             { loading ?
                 <Loading />
                 :
-                <ScrollView style={{ flex:1,paddingVertical:10}} showsVerticalScrollIndicator={false}>
+                <ScrollView style={{ flex: 1, paddingVertical: 10 }} showsVerticalScrollIndicator={false}>
                     {
                         groupedList.map(data => {
                             return (
                                 <>
                                     {data.list.length > 0 &&
                                         <>
-                                                <Text style={styles.headingText}>{data.title}</Text>
+                                            <Text style={styles.headingText}>{data.title}</Text>
                                             {
                                                 data.list.map(e => <RequestCard
                                                     key={Math.random()}
                                                     requestData={e}
-                                                    // bank={bankNames.find(bank => bank.code == e.bankId)}
                                                     user={userNames.find(user => user.code == e.discountRaisedById)}
                                                 />)
                                             }
@@ -64,14 +63,14 @@ const RequestList = ({ discountReqList, userNames, loading, bankNames, setLoadin
 
                         })
                     }
-                    <View style={{ marginBottom:20 }}/>
+                    <View style={{ marginBottom: 20 }} />
                 </ScrollView>
             }
         </View>
     )
 }
 
-const RequestCard = ({ requestData, bank, user }) => {
+const RequestCard = ({ requestData, user }) => {
 
     const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
         isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
@@ -106,7 +105,7 @@ const RequestCard = ({ requestData, bank, user }) => {
         >
             <>
                 <View style={{ ...styles.cardTopRow }}>
-                    <View style={{marginLeft:2}}>
+                    <View style={{ marginLeft: 2 }}>
                         <Text style={styles.cardTopText}>#{reqId}</Text>
                         <Text style={styles.cardTopText}>{user?.userName}</Text>
                     </View>
@@ -152,15 +151,15 @@ export default RequestList
 const styles = StyleSheet.create({
 
     cardbg: {
-        marginHorizontal:15,
-        marginTop:8,
+        marginHorizontal: 15,
+        marginTop: 8,
         paddingVertical: 15,
-        paddingLeft:15,
+        paddingLeft: 15,
         borderLeftWidth: 5,
         borderLeftColor: "#006400",
         marginBottom: 10,
-        borderTopRightRadius:5,
-        borderBottomRightRadius:5,
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
         shadowColor: "gray",
         shadowOpacity: 0.5,
         elevation: 5,
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     cardTopRow: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom:5
+        marginBottom: 5
     },
     cardRow: {
         flexDirection: "row",
@@ -188,8 +187,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: colors.red,
         fontWeight: "bold",
-        paddingVertical:6,
-        paddingHorizontal:20
+        paddingVertical: 6,
+        paddingHorizontal: 20
     },
     amountTextDiv: {
         borderColor: '#C0C0C0',
@@ -199,6 +198,8 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 25,
         backgroundColor: "#F8F6F6",
         marginLeft: "auto",
+        // borderRightWidth: 0,
+        // borderStyle: 'dashed',
     },
     headingText: {
         color: colors.text,

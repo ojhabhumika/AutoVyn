@@ -34,7 +34,7 @@ const ListIndex = ({navigation}) => {
     return (
         <>
         <View style={{shadowColor:'gray', elevation:9, shadowOpacity:1}}>
-        <NavigationBar title={''} menu={'Dashboard'} goBack navigation={navigation}/>
+        <NavigationBar title={'DISCOUNT REQUESTS'} menu={'Dashboard'} goBack navigation={navigation}/>
         <TabBarView selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
         </View>
         <RequestList

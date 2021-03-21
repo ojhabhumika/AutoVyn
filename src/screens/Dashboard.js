@@ -1,8 +1,5 @@
-import React, { useState } from 'react'
-import {
-    Divider,
-    Layout
-} from '@ui-kitten/components';
+import React from 'react'
+import { Layout } from '@ui-kitten/components';
 import {
     View, StyleSheet,
     Dimensions, TouchableOpacity
@@ -13,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationBar from '../components/NavigationBar'
 
 
-const Dashboard = ({navigation}) => {
+const Dashboard = ({ navigation }) => {
 
     const data = [{
         "title": "Discount Approval",
@@ -57,14 +54,17 @@ const Dashboard = ({navigation}) => {
 
     return (
         <Layout style={styles.container}>
-            <NavigationBar style={ { shadowColor:'gray',elevation:9, shadowOpacity:1 }}/>
+            <NavigationBar
+                title={'AUTO-VYN'}
+                style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }}
+            />
             <View style={styles.listContainer}>
                 <FlatList
                     data={data}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={2}
                     renderItem={({ item }) => (
-                        <ListItem item={item} navigation={navigation}/>
+                        <ListItem item={item} navigation={navigation} />
                     )} />
             </View>
         </Layout>
@@ -76,10 +76,10 @@ const Dashboard = ({navigation}) => {
 const ListItem = ({ item, navigation }) => {
 
     return (
-        <TouchableOpacity 
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('ListIndex')}
-        style={styles.item}>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ListIndex')}
+            style={styles.item}>
             <View style={{
                 backgroundColor: item.bg,
                 padding: 20,
