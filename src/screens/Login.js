@@ -33,6 +33,7 @@ const Login = ({ navigation }) => {
     }
 
     const onSumbit = () => {
+        // return navigation.navigate('Dashboard')
         validateUserName()
         validatePwd()
         setShowValidMsg(false)

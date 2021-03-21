@@ -207,53 +207,46 @@ const CreateRequest = ({ navigation }) => {
                         <Text style={styles.input}>
                             Will customer finance the car?
                     </Text>
-                    </CheckBox>
-                </View>
+                </CheckBox>
+            </View>
 
-                <View>
-                    <Autocomplete
-                        placeholder="Select Bank"
-                        placeholderTextColor={colors.text}
-                        value={selectedBank}
-                        onSelect={onBankSelect}
-                        onChangeText={onBankChangeText}
-                        style={[styles.inputView, styles.input, {
-                            backgroundColor: "white",
-                            borderColor: "white",
-                            paddingLeft: 0,
-                            borderBottomColor: "gray",
-                            marginRight: "auto",
-                            paddingLeft: 0,
-                            fontSize: 18,
-                        }
-                        ]}
-                    >
-                        {banks.map(bankRenderOption)}
-                    </Autocomplete>
-                </View>
+            <View>
+                <Autocomplete
+                    placeholder="Select Bank"
+                    placeholderTextColor={colors.text}
+                    value={selectedBank}
+                    onSelect={onBankSelect}
+                    onChangeText={onBankChangeText}
+                    style={[styles.inputView, {
+                        backgroundColor: "white",
+                        borderColor: "white",
+                        color: "#505050",
+                        fontSize: 16,
+                        flex:1
+                    }
+                    ]}
+                >{banks.map(bankRenderOption)}
+                </Autocomplete>
+            </View>
 
-                <View style={[styles.inputView]}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Loan Amount"
-                        placeholderTextColor={colors.text}
-                        onChangeText={text => setLoanAmount(text)}
-                        defaultValue={loanAmount}
-                        editable={isFinance}
-                        underlineColorAndroid="transparent"
-                        keyboardType={"number-pad"}
-                    />
+            <View style={[styles.inputView]}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Loan Amount"
+                    placeholderTextColor={colors.text}
+                    onChangeText={text => setLoanAmount(text)}
+                    defaultValue={loanAmount}
+                    editable={isFinance}
+                    underlineColorAndroid="transparent"
+                    keyboardType={"number-pad"}
+                />
 
-                </View>
-                <View style={{ margin: 10 }} />
-            </ScrollView >
-            <TouchableOpacity
-                style={{
-                    padding: 15, alignItems: 'center', width: "100%", backgroundColor: colors.logoBlue, shadowColor: 'gray', shadowOpacity: 0.5, elevation: 6
-                }}
-                onPress={onSubmit}
-            >
-                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>SEND REQUEST</Text>
+            </View>
+            <View style={{margin:10}}/>
+        </ScrollView >
+        <TouchableOpacity style={{padding:15,alignItems:'center', width: "100%", backgroundColor:colors.logoBlue, shadowColor:'gray',shadowOpacity:0.5,elevation:6
+            }}>
+                <Text style={{color: '#fff',fontWeight:'bold',fontSize:18}}>SEND REQUEST</Text>
             </TouchableOpacity>
         </View>
     )
@@ -273,11 +266,11 @@ const styles = StyleSheet.create({
     },
     input: {
         color: "#505050",
-        fontSize: 18,
+        fontSize: 16,
         marginHorizontal: 5,
     },
     inputView: {
-        borderBottomColor: 'gray',
+        // borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
         marginBottom: 20,
         flexDirection: 'row',
