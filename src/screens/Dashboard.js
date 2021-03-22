@@ -8,7 +8,7 @@ import {
 const {  height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationBar from '../components/NavigationBar'
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Dashboard = ({ navigation }) => {
 

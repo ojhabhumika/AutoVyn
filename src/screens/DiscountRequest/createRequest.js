@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Pressable, TextInput, ImageBackgroundBase, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, ImageBackgroundBase, ScrollView } from 'react-native';
 import colors from '../../constants/Colors'
 import { CheckBox } from '@ui-kitten/components';
-import {
-    Icon, Text, Autocomplete, AutocompleteItem,
-    IndexPath, Layout, Select, SelectItem
-} from '@ui-kitten/components';
+import { Text, Select, SelectItem } from '@ui-kitten/components';
 import useRequest from '../../hooks/useRequest';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NavigationBar from '../../components/NavigationBar'
-
+import { Picker } from '@react-native-picker/picker';
 
 const CreateRequest = ({ navigation }) => {
 
@@ -19,7 +16,7 @@ const CreateRequest = ({ navigation }) => {
     const [customerPhone, setCustomerPhone] = useState('');
     const [carVariant, setCarVariant] = useState('');
     const [isFinance, setIsFinance] = useState(false);
-    const [selectedBank, setBank] = useState({});
+    const [bankName, setBankName] = useState({});
     const [loanAmount, setLoanAmount] = useState();
     const [isMSIL_Ew, setIsMSIL_Ew] = useState(false);
     const [isR_Ew, setIsR_Ew] = useState(false);
@@ -27,21 +24,32 @@ const CreateRequest = ({ navigation }) => {
     const [actionById, setActionById] = useState();
     const [proposedDiscountAmt, setProposedDiscountAmt] = useState();
 
-    const [selectedIndex, setSelectedIndex] = React.useState();
+    const [selectedIndex, setSelectedIndex] = useState();
     const [allBanks, setAllBanks] = useState([])
     const [banks, setBanks] = useState([])
     const [approvers, setApprovers] = useState([])
+
+    const [showCustNameMsg, setShowCustNameMsg] = useState(false)
+    const [showCustPhoneMsg, setShowCustPhoneMsg] = useState(false)
+    const [showCarVariantMsg, setShowCarVariantMsg] = useState(false)
+    const [showBankNameMsg, setShowBankNameMsg] = useState(false)
+    const [showLoanAmtMsg, setShowLoanAmtMsg] = useState(false)
+    const [showMGAmtMsg, setShowMGAmtMsg] = useState(false)
+    const [showActionIdMsg, setShowActionIdMsg] = useState(false)
+    const [showDiscAmtMsg, setShowDiscAmtMsg] = useState(false)
 
     useEffect(() => {
         makeRequest({
             url: '/banks',
             method: 'GET',
             onSuccess: (res) => {
-                setAllBanks(res)
+                const data = res.map(e => e.name)
+                setBanks(data)
                 makeRequest({
                     url: '/approvers',
                     method: 'GET',
                     onSuccess: (res) => {
+                        console.log('res :>> ', res);
                         setApprovers(res)
                     }
                 })
@@ -49,58 +57,107 @@ const CreateRequest = ({ navigation }) => {
         })
     }, []);
 
+
+    const checkCustomerName = () => {
+        setShowCustNameMsg(false)
+        if (!customerName) setShowCustNameMsg(true)
+        if (customerName.length < 3) setShowCustNameMsg(true)
+    }
+
+    const checkCustomerPhone = () => {
+        setShowCustPhoneMsg(false)
+        if (!Number(customerPhone)) setShowCustPhoneMsg(true)
+        if (customerPhone.length != 10) setShowCustPhoneMsg(true)
+    }
+
+    const checkCarVariant = () => {
+        setShowCarVariantMsg(false)
+        if (!carVariant) setShowCarVariantMsg(true)
+        if (carVariant.length < 3) setShowCarVariantMsg(true)
+    }
+
+    const checkBankName = () => {
+        if (isFinance) {
+            setShowBankNameMsg(false)
+            if (!bankName) setShowBankNameMsg(true)
+            if (bankName.length < 3) setShowBankNameMsg(true)
+        }
+    }
+
+    const checkLoanAmt = () => {
+        if (isFinance) {
+            setShowLoanAmtMsg(false)
+            if (!Number(loanAmount)) setShowLoanAmtMsg(true)
+        }
+    }
+
+    const checkMGAAmt = () => {
+        setShowMGAmtMsg(false)
+        if (!Number(mgaAmount)) setShowMGAmtMsg(true)
+    }
+
+    const checkActionId = () => {
+        setShowActionIdMsg(false)
+        if (!actionId) setShowActionIdMsg(true)
+    }
+
+    const checkDiscountAmt = () => {
+        setShowDiscAmtMsg(false)
+        if (!Number(proposedDiscountAmt)) setShowDiscAmtMsg(true)
+    }
+
+
+
     const onSubmit = () => {
 
-        if (!customerName || !customerPhone || !carVariant || !isFinance || !isMSIL_Ew || !isR_Ew || !mgaAmount || !actionById || !proposedDiscountAmt)
-            return false
+        checkCustomerName()
+        checkCustomerPhone()
+        checkCarVariant()
+        checkBankName()
+        checkLoanAmt()
+        checkMgAAmt()
+        checkActionId()
+        checkDiscountAmt()
 
-        if (isFinance) {
-            if (!selectedBank?.bankId || !loanAmount) return false
-        }
+        if (showCustNameMsg || showCustPhoneMsg || showCarVariantMsg || showBankNameMsg
+            || showLoanAmtMsg || showMGAmtMsg || showActionIdMsg || showDiscAmtMsg)
+            return false
 
         makeRequest({
             url: '/discountRequests',
             method: 'POST',
             body: {
-                actionById, customerName, customerPhone, carVariant, isFinance,
-                loanAmount, isMSIL_Ew, isR_Ew, mgaAmount, proposedDiscountAmt,
-                bankId: selectedBank?.bankId
+                actionTakenById: actionById,
+                customerName,
+                customerPhone,
+                carVariant,
+                isFinance,
+                loanAmount,
+                isMSILEw: isMSIL_Ew,
+                IsREw: isR_Ew,
+                accessoriesAmt: mgaAmount,
+                proposedDiscountAmount: proposedDiscountAmt,
+                bankName
             },
-            onSuccess: (res) => {
-
-            },
-            onFailure: () => setLoading(false)
+            onSuccess: () => navigation.navigate("ListIndex"),
         })
     }
-
-    const filter = (item, query) => item.name.toLowerCase().includes(query.toLowerCase());
-    const onBankSelect = (index) => {
-        setBank(banks[index].name);
-    };
-
-    const onBankChangeText = (query) => {
-        setBank(query)
-        if (query.length < 3) return
-        setBanks(allBanks)
-        setBanks(banks.filter(item => filter(item, query)));
-    };
-
-    const bankRenderOption = (item, index) => (
-        <AutocompleteItem
-            style={{ fontSize: 18, paddingHorizontal: 0 }}
-            key={index}
-            title={item.name}
-        />
-    );
 
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <NavigationBar navigation={navigation} menu={'logout'} goBack hide style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }} />
+            <NavigationBar
+                title={"CREATE DISCOUNT REQUEST"}
+                navigation={navigation}
+                goBack
+                hide={true}
+                style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }}
+            />
 
             <ScrollView style={styles.formView} showsVerticalScrollIndicator={false}>
 
-                <View style={styles.inputView}>
+                <View style={[styles.inputView,
+                { borderBottomColor: (!showCustNameMsg ? "gray" : colors.logoRed) }]}>
                     <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
                     <TextInput
                         style={styles.input}
@@ -108,10 +165,17 @@ const CreateRequest = ({ navigation }) => {
                         placeholderTextColor={colors.text}
                         onChangeText={text => setCustomerName(text)}
                         defaultValue={customerName}
-                        underlineColorAndroid="transparent"
+                        onBlur={checkCustomerName}
                     />
                 </View>
-                <View style={styles.inputView}>
+                {showCustNameMsg &&
+                    <Text style={styles.errorText}>
+                        Please enter Customer Name. (2-100 characters).
+                    </Text>
+                }
+                <View style={[styles.inputView,
+                { borderBottomColor: (!showCustPhoneMsg ? "gray" : colors.logoRed) }
+                ]}>
                     <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
                     <TextInput
                         style={styles.input}
@@ -119,12 +183,18 @@ const CreateRequest = ({ navigation }) => {
                         placeholderTextColor={colors.text}
                         onChangeText={text => setCustomerPhone(text)}
                         defaultValue={customerPhone}
-                        underlineColorAndroid="transparent"
+                        onBlur={checkCustomerPhone}
                         keyboardType={"phone-pad"}
                     />
                 </View>
-
-                <View style={styles.inputView}>
+                {showCustPhoneMsg &&
+                    <Text style={styles.errorText}>
+                        Please enter a 10-digit mobile number.
+                    </Text>
+                }
+                <View style={[styles.inputView,
+                { borderBottomColor: (!showCarVariantMsg ? "gray" : colors.logoRed) }
+                ]}>
                     <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
                     <TextInput
                         style={styles.input}
@@ -132,11 +202,17 @@ const CreateRequest = ({ navigation }) => {
                         placeholderTextColor={colors.text}
                         onChangeText={text => setCarVariant(text)}
                         defaultValue={carVariant}
-                        underlineColorAndroid="transparent"
+                        onBlur={checkCarVariant}
                     />
                 </View>
-
-                <View style={styles.inputView}>
+                {showCarVariantMsg &&
+                    <Text style={styles.errorText}>
+                        Please enter a car variant.
+                    </Text>
+                }
+                <View style={[styles.inputView,
+                { borderBottomColor: (!showDiscAmtMsg ? "gray" : colors.logoRed) }]
+                }>
                     <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
                     <TextInput
                         style={styles.input}
@@ -144,12 +220,18 @@ const CreateRequest = ({ navigation }) => {
                         placeholderTextColor={colors.text}
                         onChangeText={text => setProposedDiscountAmt(text)}
                         defaultValue={proposedDiscountAmt}
-                        underlineColorAndroid="transparent"
+                        onBlur={checkDiscountAmt}
                         keyboardType={"number-pad"}
                     />
                 </View>
-
-                <View style={styles.inputView}>
+                {showDiscAmtMsg &&
+                    <Text style={styles.errorText}>
+                        Please enter discount amount.
+                </Text>
+                }
+                <View style={[styles.inputView,
+                { borderBottomColor: (!showMGAmtMsg ? "gray" : colors.logoRed) }
+                ]}>
                     <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text>
                     <TextInput
                         style={styles.input}
@@ -157,33 +239,36 @@ const CreateRequest = ({ navigation }) => {
                         placeholderTextColor={colors.text}
                         onChangeText={text => setMgaAmount(text)}
                         defaultValue={mgaAmount}
-                        underlineColorAndroid="transparent"
+                        onBlur={checkMGAAmt}
                         keyboardType={"number-pad"}
                     />
                 </View>
+                {showMGAmtMsg &&
+                    <Text style={styles.errorText}>
+                        Please enter a MGA/NGA amount.
+                    </Text>
+                }
+                <View style={[styles.inputView,]}>
+                    <Picker
+                        selectedValue={actionById}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setActionById(itemValue)
+                        }
+                        >
+                        {
+                            approvers.map((s, i) => {
+                                return <Picker.Item key={i} value={s.code} label={s.name} />
+                            })
+                        }
 
-                <View>
-                    <Select
-                        selectedIndex={selectedIndex}
-                        onSelect={index => setSelectedIndex(index)}
-                        style={{
-                            backgroundColor: "white",
-                            borderColor: "white",
-                            borderWidth: 0.5,
-                            marginRight: "auto",
-                            fontSize: 18,
-                            marginBottom: 20,
-                            flexDirection: 'row',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <SelectItem title='Option 7' />
-                        <SelectItem title='Option 2' />
-                        <SelectItem title='Option 3' />
-                    </Select>
+                    </Picker>
                 </View>
 
-
+                {showActionIdMsg &&
+                    <Text style={styles.errorText}>
+                        Please select a approver.
+                    </Text>
+                }
                 <View style={styles.checkBoxView}>
                     <CheckBox
                         checked={isMSIL_Ew}
@@ -207,46 +292,58 @@ const CreateRequest = ({ navigation }) => {
                         <Text style={styles.input}>
                             Will customer finance the car?
                     </Text>
-                </CheckBox>
-            </View>
+                    </CheckBox>
+                </View>
 
-            <View>
-                <Autocomplete
-                    placeholder="Select Bank"
-                    placeholderTextColor={colors.text}
-                    value={selectedBank}
-                    onSelect={onBankSelect}
-                    onChangeText={onBankChangeText}
-                    style={[styles.inputView, {
-                        backgroundColor: "white",
-                        borderColor: "white",
-                        color: "#505050",
-                        fontSize: 16,
-                        flex:1
+
+                <Picker
+                    selectedValue={bankName}
+                    onValueChange={(itemValue, itemIndex) =>
+                        setBankName(itemValue)
                     }
-                    ]}
-                >{banks.map(bankRenderOption)}
-                </Autocomplete>
-            </View>
+                    style={styles.inputView}>
+                    <Picker.Item
+                        label="java" value="java"
+                    />
+                    {
+                        banks.map((s, i) => {
+                            return <Picker.Item key={i} value={s} label={s} />
+                        })
+                    }
 
-            <View style={[styles.inputView]}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Loan Amount"
-                    placeholderTextColor={colors.text}
-                    onChangeText={text => setLoanAmount(text)}
-                    defaultValue={loanAmount}
-                    editable={isFinance}
-                    underlineColorAndroid="transparent"
-                    keyboardType={"number-pad"}
-                />
+                </Picker>
 
-            </View>
-            <View style={{margin:10}}/>
-        </ScrollView >
-        <TouchableOpacity style={{padding:15,alignItems:'center', width: "100%", backgroundColor:colors.logoBlue, shadowColor:'gray',shadowOpacity:0.5,elevation:6
-            }}>
-                <Text style={{color: '#fff',fontWeight:'bold',fontSize:18}}>SEND REQUEST</Text>
+                {
+                    showBankNameMsg &&
+                    <Text style={styles.errorText}>
+                        Please select a Bank Name.
+                    </Text>
+                }
+                <View style={[styles.inputView]}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Loan Amount"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setLoanAmount(text)}
+                        defaultValue={loanAmount}
+                        editable={isFinance}
+                        onBlur={checkLoanAmt}
+                        keyboardType={"number-pad"}
+                    />
+
+                </View>
+                {showLoanAmtMsg &&
+                    <Text style={styles.errorText}>
+                        Please select a loan amount.
+                </Text>}
+                <View style={{ margin: 10 }} />
+            </ScrollView >
+            <TouchableOpacity style={{
+                padding: 15, alignItems: 'center', width: "100%", backgroundColor: colors.logoBlue, shadowColor: 'gray', shadowOpacity: 0.5, elevation: 6
+            }}
+                onPress={onSubmit}
+            >
+                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>SEND REQUEST</Text>
             </TouchableOpacity>
         </View>
     )
@@ -270,9 +367,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     inputView: {
-        // borderBottomColor: 'gray',
+        //borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
-        marginBottom: 20,
+        marginBottom: 10,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -281,6 +378,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    errorText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: colors.logoRed,
+        marginBottom: 20
     }
 
 })

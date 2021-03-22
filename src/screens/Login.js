@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import {
     Layout,
     Icon
 } from '@ui-kitten/components';
 import { View, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Text } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const { width } = Dimensions.get('window')
 import colors from '../constants/Colors'
 import useRequest from '../hooks/useRequest';
-import UserContext from '../context/UserContext'
 
 const Login = ({ navigation }) => {
 
@@ -85,7 +84,7 @@ const Login = ({ navigation }) => {
                     {
                         showUserMsg &&
                         <Text style={styles.errorText}>
-                            User name cannot be empty
+                            Please enter user name.
                         </Text>
                     }
                 </View>
@@ -119,7 +118,7 @@ const Login = ({ navigation }) => {
                     {
                         showPwdMsg &&
                         <Text style={styles.errorText}>
-                            Password cannot be empty
+                            Please enter password.
                         </Text>
                     }
                 </View>

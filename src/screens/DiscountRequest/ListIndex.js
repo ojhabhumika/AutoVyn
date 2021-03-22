@@ -20,7 +20,6 @@ const ListIndex = ({ navigation }) => {
             url: '/discountRequests',
             method: 'GET',
             onSuccess: (res) => {
-                console.log('res :>> ', res);
                 setDiscountReqList(res.userRequests);
                 setUserNames(res.userNames)
             },
@@ -29,7 +28,6 @@ const ListIndex = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        console.log('selectedIndex :>> ', selectedIndex);
         if (discountReqList.length > 0) {
             if (selectedIndex == 0) {
                 let data = discountReqList.filter(e => e.status === null)

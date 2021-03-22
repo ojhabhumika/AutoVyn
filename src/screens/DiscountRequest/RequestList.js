@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../constants/Colors'
 import { parseISO, isToday, isYesterday } from 'date-fns'
-import { Text } from '@ui-kitten/components';
 import Loading from '../../components/Loading'
 import ActionModal from './_ReqActionModal'
 import { TouchableOpacity } from 'react-native-gesture-handler';
