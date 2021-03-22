@@ -10,6 +10,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const RequestList = ({ filteredList, userNames, loading, setLoading, selectedIndex }) => {
 
     const [groupedList, setGroupedList] = useState([])
+    const [groupLoading, setGroupLoading] = useState(true)
 
     useEffect(() => {
         setGroupedList([])
@@ -29,19 +30,22 @@ const RequestList = ({ filteredList, userNames, loading, setLoading, selectedInd
             setGroupedList(groupBy)
             setLoading(false)
         }
+        setGroupLoading(false)
     }, [selectedIndex, filteredList]);
 
+    useEffect(() => {
+        if (groupedList.length > 0) setLoading(false)
+    }, [groupedList])
+
+    if (loading) return <Loading />
 
     return (
         <View style={{ flex: 1 }}>
-            { loading ?
-                <Loading />
-                :
+            { !groupLoading &&
                 <ScrollView style={{ flex: 1, paddingVertical: 10 }} showsVerticalScrollIndicator={false}>
                     {
                         groupedList.length > 0 ?
                             (
-
                                 groupedList.map(data => {
                                     return (
                                         <>
@@ -50,7 +54,7 @@ const RequestList = ({ filteredList, userNames, loading, setLoading, selectedInd
                                                     <Text style={styles.headingText}>{data.title}</Text>
                                                     {
                                                         data.list.map(e => <RequestCard
-                                                            key={Math.random()}
+                                                            key={e.reqId}
                                                             requestData={e}
                                                             user={userNames.find(user => user.code == e.discountRaisedById)}
                                                         />)
@@ -83,32 +87,15 @@ const RequestCard = ({ requestData, user }) => {
 
     const [showModal, setShowModal] = useState(false)
 
-    const getLightColor = status == null
-        ? colors.lightBlue
-        : (status == true ? colors.lightGreen : colors.lightRed)
-
     return (
         <TouchableOpacity
             activeOpacity={1}
-            style={styles.cardbg}
-        // style={({ pressed }) => [
-        //     styles.cardbg,
-        //     {
-        //         backgroundColor: pressed
-        //             ? getLightColor
-        //             : '#FFF',
-        //     },
-        //     {
-        //         borderLeftColor: (status == null)
-        //             ? colors.logoBlue
-        //             : (status == true ? colors.green : colors.logoRed)
-
-        //         //   Processing  : blue 
-        //         //   Accepted    : green
-        //         //   Rejected    : red
-        //     }
-        // ]}
-        // android_ripple={{ color: getLightColor, borderless: false }}
+            style={[styles.cardbg,
+            {
+                borderLeftColor: (status == null)
+                    ? colors.logoBlue
+                    : (status == true ? colors.green : colors.logoRed)
+            }]}
         >
             <>
                 <View style={{ ...styles.cardTopRow }}>
@@ -226,6 +213,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'left',
         paddingLeft: 15,
-        marginTop: 15
+        marginTop: 15,
+        marginBottom: 5
     }
 });

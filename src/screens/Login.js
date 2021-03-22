@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import {
-    Layout,
-    Icon
+    Layout
 } from '@ui-kitten/components';
 import { View, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Text } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const { width } = Dimensions.get('window')
 import colors from '../constants/Colors'
 import useRequest from '../hooks/useRequest';
@@ -43,7 +43,7 @@ const Login = ({ navigation }) => {
                 method: 'POST',
                 body: { userName, password },
                 onSuccess: async (res) => {
-                    
+
                     await AsyncStorage.setItem('@token', res.token)
                     await AsyncStorage.setItem('@user', JSON.stringify(res))
                     navigation.navigate('Dashboard')
@@ -67,7 +67,7 @@ const Login = ({ navigation }) => {
                 { borderBottomColor: (!showUserMsg ? "gray" : colors.logoRed) }
                 ]}
                 >
-                    <Icon name={'email-outline'} width={25} height={25} fill={'#969696'} />
+                    <Icon name={'account'} size={27} color={'#969696'} />
                     <TextInput
                         style={styles.textInput}
                         placeholder='Enter UserName...'
@@ -92,7 +92,7 @@ const Login = ({ navigation }) => {
                 { borderBottomColor: (!showPwdMsg ? "gray" : colors.logoRed) }
                 ]}
                 >
-                    <Icon name={'lock-outline'} width={28} height={28} fill={'#969696'} />
+                    <Icon name={'lock'} size={27} color={'#969696'} />
                     <TextInput
                         style={{ ...styles.textInput, marginLeft: 7 }}
                         placeholder='Enter Password...'

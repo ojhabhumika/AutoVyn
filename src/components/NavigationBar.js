@@ -10,7 +10,7 @@ const NavigationBar = ({ title, menu, goBack, navigation, style, hide }) => {
     const [showMenuOption, setShowOptionMenu] = useState(false)
 
     const onPress = () => {
-        if (menu != "logout") navigation.navigate('CreateRequest')
+        if (menu != "logout") navigation.push('CreateRequest')
     }
 
     const renderMenu = () => {
