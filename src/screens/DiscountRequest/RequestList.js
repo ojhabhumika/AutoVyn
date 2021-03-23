@@ -139,13 +139,11 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                 </View>
 
                 {
-                    !canUserApproveReq &&
+                    !canUserApproveReq && status == null &&
                     <View style={styles.actionRow}>
 
-
-
                         <TouchableOpacity
-                            style={[styles.actionButton, { backgroundColor: "#e7f7f5", paddingHorizontal: 30 }]}
+                            style={[styles.actionButton, { backgroundColor: "#e7f7f5" }]}
                             activeOpacity={0.8}
                             onPress={() => setShowModal(true)}>
                             <Icon name="checkmark" size={25} color={'#339989'} />
@@ -153,7 +151,7 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={[styles.actionButton, { backgroundColor: "#ffebee", paddingHorizontal: 20 }]}
+                            style={[styles.actionButton, { backgroundColor: "#ffebee" }]}
                             activeOpacity={0.8}
                             onPress={() => { setShowModal(true) }}>
                             <Icon name="close" size={25} color={'#ef5350'} />
