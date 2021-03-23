@@ -88,7 +88,7 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
         isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
 
     const [showModal, setShowModal] = useState(false)
-
+    const [isAccept, setIsAccept] = useState(false)
     return (
         <TouchableOpacity
             activeOpacity={1}
@@ -145,7 +145,9 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         <TouchableOpacity
                             style={[styles.actionButton, { backgroundColor: "#e7f7f5" }]}
                             activeOpacity={0.8}
-                            onPress={() => setShowModal(true)}>
+                            onPress={() =>  {
+                                setIsAccept(true)
+                                setShowModal(true)}}>
                             <Icon name="checkmark" size={25} color={'#339989'} />
                             <Text style={[styles.actionText, { color: "#339989" }]}>Accept</Text>
                         </TouchableOpacity>
@@ -153,14 +155,16 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         <TouchableOpacity
                             style={[styles.actionButton, { backgroundColor: "#ffebee" }]}
                             activeOpacity={0.8}
-                            onPress={() => { setShowModal(true) }}>
+                            onPress={() => { 
+                                setIsAccept(false)
+                                setShowModal(true) }}>
                             <Icon name="close" size={25} color={'#ef5350'} />
                             <Text style={[styles.actionText, { color: "#ef5350" }]}>Reject</Text>
                         </TouchableOpacity>
                     </View>
                 }
             </>
-            < ActionModal reqId={reqId} status={status} hide={() => setShowModal(false)} show={showModal} />
+            < ActionModal reqId={reqId} status={status} hide={() => setShowModal(false)} show={showModal} isAccept={isAccept} />
         </TouchableOpacity >
     )
 }

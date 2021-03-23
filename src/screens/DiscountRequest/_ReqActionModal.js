@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
 import { Text, Button, ButtonGroup, Modal, Icon } from '@ui-kitten/components';
-
-const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
+const {width,height} = Dimensions.get('window')
+const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000, isAccept }) => {
 
     const { makeRequest } = useRequest();
 
@@ -36,24 +36,34 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
         })
     }
 
+    const resetModal = () => {
+        setDiscount(proposedAmt)
+        setIsDiscountValid(true)
+        hide()
+    }
+
     return (
         <Modal
         visible={show}
+        style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0, top: '50%' }}
+
             backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
-            onBackdropPress={hide} >
-            <View style={{ padding: 15,backgroundColor:'#fff',borderRadius:6,shadowColor:'gray', elevation:6 }}>
+            onBackdropPress={resetModal} >
+            <View style={{position:'absolute',bottom:0,left:0,right:0,backgroundColor:'#fff',width:width }}>
+            <View style={{padding:15,flex:1}}>
             <TouchableOpacity
-                onPress={hide}
+                onPress={resetModal}
                 style={{position:'absolute',right:15,top:15}}
                 activeOpacity={0.8}>
             <Icon name="close-outline" fill={'gray'} width={30} height={30} />
             </TouchableOpacity>
-            <Text style={{marginHorizontal:10, color:'#313131',marginTop:50,marginBottom:20}}>Allowed discount should be less than {proposedAmt} </Text>
+            
 {
     
-    status != true &&
-    
-    <View style={{ flexDirection: "row" }}>
+    (status != true && isAccept) &&
+    <>
+        <Text style={{marginHorizontal:10, color:'#313131',marginTop:30,marginBottom:8}}>Allowed discount should be less than {proposedAmt} </Text>
+        <View style={{ flexDirection: "row" }}>
         <TextInput
             style={styles.input}
             placeholder="Allowed Discount Amount"
@@ -77,7 +87,7 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
             </Button>
         </ButtonGroup> */}
     </View>
-}
+    </>}
 
 {
     !isDiscountValid &&
@@ -85,7 +95,7 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
 }
 
 <TextInput
-    style={styles.input}
+    style={{...styles.input,minHeight:100,marginTop:isAccept ? 20 : 40}}
     placeholder="Enter remarks (optional)"
     placeholderTextColor={colors.text}
     onChangeText={text => setRemarks(text)}
@@ -93,12 +103,13 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000 }) => {
     multiline={true}
     underlineColorAndroid="transparent"
 />
+            </View>
 
-<View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginVertical:10}}>
+<View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
 <TouchableOpacity
     onPress={onSubmit}
     activeOpacity={0.8}
-    style={{ margin: 10,padding:12,backgroundColor:'#65BDF2',width:'40%',borderRadius:24 }}
+    style={{ padding:15,backgroundColor:'#65BDF2',flex:1 }}
 >
     <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>SAVE</Text>
 </TouchableOpacity>
