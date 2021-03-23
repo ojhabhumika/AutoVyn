@@ -7,7 +7,8 @@ import Loading from '../../components/Loading'
 import ActionModal from './_ReqActionModal'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const RequestList = ({ filteredList, userNames, loading, setLoading, selectedIndex }) => {
+const RequestList = ({ filteredList, userNames, loading, setLoading,
+    selectedIndex, canUserApproveReq }) => {
 
     const [groupedList, setGroupedList] = useState([])
     const [groupLoading, setGroupLoading] = useState(true)
@@ -57,6 +58,7 @@ const RequestList = ({ filteredList, userNames, loading, setLoading, selectedInd
                                                             key={e.reqId}
                                                             requestData={e}
                                                             user={userNames.find(user => user.code == e.discountRaisedById)}
+                                                            canUserApproveReq={canUserApproveReq}
                                                         />)
                                                     }
                                                 </>
@@ -80,7 +82,7 @@ const RequestList = ({ filteredList, userNames, loading, setLoading, selectedInd
     )
 }
 
-const RequestCard = ({ requestData, user }) => {
+const RequestCard = ({ requestData, user, canUserApproveReq }) => {
 
     const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
         isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
@@ -133,17 +135,32 @@ const RequestCard = ({ requestData, user }) => {
                     <Text style={styles.cardText}>
                         {isMSILEw && "MSILEW |"} {IsREw && "REW | "}MGA/NGA ₹{accessoriesAmt}
                     </Text>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() => setShowModal(true)}>
-                        <Icon name="checkmark-circle" size={35} color={'#65BDF2'} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() => { setShowModal(true) }}>
-                        <Icon name="close-circle" size={35} color={'#65BDF2'} style={{ marginHorizontal: 15 }} />
-                    </TouchableOpacity>
+
                 </View>
+
+                {
+                    !canUserApproveReq &&
+                    <View style={styles.actionRow}>
+
+
+
+                        <TouchableOpacity
+                            style={[styles.actionButton, { backgroundColor: "#e7f7f5", paddingHorizontal: 30 }]}
+                            activeOpacity={0.8}
+                            onPress={() => setShowModal(true)}>
+                            <Icon name="checkmark" size={25} color={'#339989'} />
+                            <Text style={[styles.actionText, { color: "#339989" }]}>Accept</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[styles.actionButton, { backgroundColor: "#ffebee", paddingHorizontal: 20 }]}
+                            activeOpacity={0.8}
+                            onPress={() => { setShowModal(true) }}>
+                            <Icon name="close" size={25} color={'#ef5350'} />
+                            <Text style={[styles.actionText, { color: "#ef5350" }]}>Reject</Text>
+                        </TouchableOpacity>
+                    </View>
+                }
             </>
             < ActionModal reqId={reqId} status={status} hide={() => setShowModal(false)} show={showModal} />
         </TouchableOpacity >
@@ -215,5 +232,27 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         marginTop: 15,
         marginBottom: 5
+    },
+    actionRow: {
+        flexDirection: "row-reverse",
+        marginTop: 15,
+        alignItems: "center",
+        marginLeft: 20
+    },
+    actionButton: {
+        flexDirection: "row",
+        borderColor: "#fff",
+        borderWidth: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderLeftWidth: 5
+    },
+    actionText: {
+        fontSize: 18,
+        marginHorizontal: 5,
+        fontWeight: "bold",
     }
+
 });

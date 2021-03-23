@@ -5,7 +5,7 @@ import {
     Dimensions, TouchableOpacity
     , Text, FlatList, ToastAndroid
 } from 'react-native'
-const {  height } = Dimensions.get('window')
+const { height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationBar from '../components/NavigationBar'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -80,8 +80,7 @@ const Dashboard = ({ navigation }) => {
         <Layout style={styles.container}>
             <NavigationBar
                 title={"AUTO-VYN"}
-                menu={'logout'}
-                style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }}
+                navigation={navigation}
             />
             <View style={styles.listContainer}>
 
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#EAE9E9'
+        backgroundColor: '#E3E3E3'
     },
     toolbar: {
         width: '100%',

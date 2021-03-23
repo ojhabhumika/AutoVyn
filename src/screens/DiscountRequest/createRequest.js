@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, ImageBackgroundBase, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, ImageBackgroundBase, ScrollView } from 'react-native';
 import colors from '../../constants/Colors'
 import { CheckBox } from '@ui-kitten/components';
-import { Text } from '@ui-kitten/components';
 import useRequest from '../../hooks/useRequest';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import NavigationBar from '../../components/NavigationBar'
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -142,13 +140,15 @@ const CreateRequest = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <NavigationBar
-                title={"CREATE DISCOUNT REQUEST"}
-                navigation={navigation}
-                goBack
-                hide={true}
-                style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }}
-            />
+
+            <View style={styles.navBar}>
+
+                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
+                    <Icon name='arrow-left' size={30} color={colors.text} style={{ marginLeft: 15 }} />
+                </TouchableOpacity>
+
+                <Text style={styles.navTitle}>CREATE DISCOUNT REQUESTS</Text>
+            </View>
 
             <ScrollView style={styles.formView} showsVerticalScrollIndicator={false}>
 
@@ -356,7 +356,7 @@ const CreateRequest = ({ navigation }) => {
                 padding: 15, justifyContent: 'center',
                 width: "100%", backgroundColor: colors.logoBlue,
                 shadowColor: 'gray', shadowOpacity: 0.5, elevation: 6,
-                alignContent:"center"
+                alignContent: "center"
             }}
                 onPress={onSubmit}
             >
@@ -406,6 +406,21 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderBottomWidth: 0.8,
         marginBottom: 10
+    },
+    navBar: {
+        width: '100%',
+        backgroundColor: '#FFF',
+        height: 55,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: "#e3e3e3",
+        borderBottomWidth: 1,
+        shadowColor: 'gray',
+        elevation: 9, shadowOpacity: 1
+    },
+    navTitle: {
+        flex: 1,
+        marginLeft: 22, color: '#808080',
+        fontSize: 20, fontWeight: 'bold'
     }
-
 })

@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Dimensions } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import RequestList from './RequestList'
-import NavigationBar from '../../components/NavigationBar'
 const { width } = Dimensions.get('window')
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../constants/Colors'
+import {
+    Icon
+} from '@ui-kitten/components';
+
 const ListIndex = ({ navigation }) => {
 
     const { makeRequest } = useRequest();
@@ -13,6 +18,20 @@ const ListIndex = ({ navigation }) => {
     const [filteredList, setFilteredList] = useState([])
     const [userNames, setUserNames] = useState([])
     const [loading, setLoading] = useState(false)
+
+    const [canUserCreateReq, setUserCreateReq] = useState(false)
+    const [canUserApproveReq, setUserApproveReq] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+            const asyncData = await AsyncStorage.getItem('@user')
+            const data = JSON.parse(asyncData)
+            if (data) {
+                setUserCreateReq(data.user.canRaiseDiscount)
+                setUserApproveReq(data.user.canApproveDiscount)
+            }
+        })();
+    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -49,7 +68,24 @@ const ListIndex = ({ navigation }) => {
     return (
         <>
             <View style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }}>
-                <NavigationBar title={'DISCOUNT REQUESTS'} menu={'Dashboard'} goBack navigation={navigation} />
+                <View style={styles.navBar}>
+
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
+                        <Icon name='arrow-back-outline' width={35} height={35} fill={colors.text} style={{ marginLeft: 15 }} />
+                    </TouchableOpacity>
+
+                    <Text style={styles.navTitle}>DISCOUNT REQUESTS</Text>
+                    {
+                        canUserCreateReq &&
+                        <TouchableOpacity
+                            style={{ padding: 10 }}
+                            onPress={() => navigation.push('CreateRequest')}>
+                            <Icon name='plus-circle-outline' width={30} height={30} fill={colors.text} />
+                        </TouchableOpacity>
+                    }
+
+                </View>
+
                 <TabBarView selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
             </View>
             <RequestList
@@ -58,6 +94,7 @@ const ListIndex = ({ navigation }) => {
                 loading={loading}
                 setLoading={setLoading}
                 selectedIndex={selectedIndex}
+                canUserApproveReq={canUserApproveReq}
             />
         </>
     );
@@ -70,7 +107,7 @@ const TabBarView = ({ selectedIndex, setSelectedIndex }) => {
             <TouchableOpacity
                 onPress={() => setSelectedIndex(0)}
                 style={{ ...styles.button, backgroundColor: selectedIndex == 0 ? '#fff' : '#65BDF2' }}>
-                <Text style={{ fontWeight: 'bold', color: selectedIndex == 0 ? '#65BDF2' : 'white' }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', color: selectedIndex == 0 ? '#65BDF2' : 'white' }}>
                     PROCESSING
                 </Text>
             </TouchableOpacity>
@@ -78,14 +115,14 @@ const TabBarView = ({ selectedIndex, setSelectedIndex }) => {
 
                 onPress={() => setSelectedIndex(1)}
                 style={{ ...styles.button, backgroundColor: selectedIndex == 1 ? '#fff' : '#65BDF2' }}>
-                <Text style={{ fontWeight: 'bold', color: selectedIndex == 1 ? '#65BDF2' : 'white' }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', color: selectedIndex == 1 ? '#65BDF2' : 'white' }}>
                     ACCEPTED
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => setSelectedIndex(2)}
                 style={{ ...styles.button, backgroundColor: selectedIndex == 2 ? '#fff' : '#65BDF2' }}>
-                <Text style={{ fontWeight: 'bold', color: selectedIndex == 2 ? '#65BDF2' : 'white' }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', color: selectedIndex == 2 ? '#65BDF2' : 'white' }}>
                     REJECTED
                 </Text>
             </TouchableOpacity>
@@ -105,6 +142,25 @@ const styles = StyleSheet.create({
         width: width / 3,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    navBar: {
+        width: '100%',
+        backgroundColor: '#FFF',
+        height: 55,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: "#e3e3e3",
+        borderBottomWidth: 2,
+        // shadowColor: 'gray',
+        // elevation: 9,
+        // shadowOpacity: 1
+    },
+    navTitle: {
+        flex: 1,
+        marginLeft: 22,
+        color: colors.text,
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 })
 

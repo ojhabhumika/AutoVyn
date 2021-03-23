@@ -62,7 +62,7 @@ const Login = ({ navigation }) => {
                 <Image style={{ width: width / 2, height: width / 2 }}
                     source={require('../../assets/AutoVyn_Logo.jpeg')} />
             </View>
-            <View style={{ flex: 1, margin: 30, marginTop: 0 }}>
+            <View style={{ flex: 1, margin: 30, marginTop: 30 }}>
                 <View style={[styles.inputView,
                 { borderBottomColor: (!showUserMsg ? "gray" : colors.logoRed) }
                 ]}
