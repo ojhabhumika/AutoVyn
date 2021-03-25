@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import {
-    Icon,
     Popover
 } from '@ui-kitten/components';
 import { View, TouchableOpacity, Text, Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../constants/Colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const NavigationBar = ({ title, navigation }) => {
 
@@ -15,7 +15,7 @@ const NavigationBar = ({ title, navigation }) => {
         return <TouchableOpacity
             style={{ padding: 10 }}
             onPress={() => setShowOptionMenu(true)}>
-            <Icon name='more-vertical-outline' width={30} height={30} fill={'#fff'} />
+            <Icon name='dots-vertical' size={30} color={"#FFF"} />
         </TouchableOpacity>
     }
 

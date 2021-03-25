@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
-import { Text, Button, ButtonGroup, Modal, Icon } from '@ui-kitten/components';
-const {width,height} = Dimensions.get('window')
-const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000, isAccept }) => {
+import { Button, ButtonGroup, Modal } from '@ui-kitten/components';
+const { width, height } = Dimensions.get('window')
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
 
     const { makeRequest } = useRequest();
 
@@ -27,7 +29,7 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000, isAccept }
             url: `/discountRequests${reqId}`,
             method: 'PUT',
             body: {
-                status, allowedDiscount: discount, remarks
+                status: isAccept, allowedDiscount: discount, remarks
             },
             onSuccess: (res) => {
                 // reload page
@@ -44,39 +46,47 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000, isAccept }
 
     return (
         <Modal
-        visible={show}
-        style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0, top: '50%' }}
+            visible={show}
+            style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0, top: '50%' }}
 
             backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
             onBackdropPress={resetModal} >
-            <View style={{position:'absolute',bottom:0,left:0,right:0,backgroundColor:'#fff',width:width }}>
-            <View style={{padding:15,flex:1}}>
-            <TouchableOpacity
-                onPress={resetModal}
-                style={{position:'absolute',right:15,top:15}}
-                activeOpacity={0.8}>
-            <Icon name="close-outline" fill={'gray'} width={30} height={30} />
-            </TouchableOpacity>
-            
-{
-    
-    (status != true && isAccept) &&
-    <>
-        <Text style={{marginHorizontal:10, color:'#313131',marginTop:30,marginBottom:8}}>Allowed discount should be less than {proposedAmt} </Text>
-        <View style={{ flexDirection: "row" }}>
-        <TextInput
-            style={styles.input}
-            placeholder="Allowed Discount Amount"
-            placeholderTextColor={colors.text}
-            focusable={true}
-            onChangeText={text => setDiscount(Number(text) ?? 0)}
-            value={`${discount ?? 0}`}
-            defaultValue={`${discount ?? 0}`}
-            onBlur={checkDiscount}
-            keyboardType={"number-pad"}
-        />
+            <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', width: width }}>
+                <View style={{ padding: 15, flex: 1 }}>
 
-        {/* <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
+                    <Text>
+                        Request-Id #{reqId}
+                    </Text>
+                    <TouchableOpacity
+                        onPress={resetModal}
+                        style={{ position: 'absolute', right: 15, top: 15 }}
+                        activeOpacity={0.8}>
+                        <Icon name="close" color={'gray'} size={30} />
+                    </TouchableOpacity>
+
+                    {
+
+                        isAccept &&
+                        <>
+                            {/* <Text style={{
+                                marginHorizontal: 10,
+                                color: '#313131', marginTop: 30,
+                                marginBottom: 8
+                            }}>Allowed discount should be less than {proposedAmt} </Text> */}
+                            <View style={{ flexDirection: "row", borderBottonWidth: 2, borderBottomColor: "#000" }}>
+                                <TextInput
+                                    style={[styles.input]}
+                                    placeholder="Allowed Discount Amount"
+                                    placeholderTextColor={colors.text}
+                                    focusable={true}
+                                    onChangeText={text => setDiscount(Number(text) ?? 0)}
+                                    value={`${discount ?? 0}`}
+                                    defaultValue={`${proposedAmt ?? 0}`}
+                                    onBlur={checkDiscount}
+                                    keyboardType={"number-pad"}
+                                />
+
+                                {/* <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
             <Button
                 onPress={() => setDiscount(prev => prev + 500)}
                 disabled={discount >= proposedAmt}>+
@@ -86,46 +96,43 @@ const ActionModal = ({ show, hide, reqId, status, proposedAmt = 5000, isAccept }
                 disabled={discount <= 0}>-
             </Button>
         </ButtonGroup> */}
-    </View>
-    </>}
+                            </View>
+                        </>}
 
-{
-    !isDiscountValid &&
-    (discount > proposedAmt ? <Text style={{marginHorizontal:10, color:'red'}}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{marginHorizontal:10, color:'red'}}>Invalid value</Text>)
-}
+                    {
+                        !isDiscountValid &&
+                        (discount > proposedAmt ? <Text style={{ marginHorizontal: 10, color: 'red' }}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{ marginHorizontal: 10, color: 'red' }}>Invalid value</Text>)
+                    }
 
-<TextInput
-    style={{...styles.input,minHeight:100,marginTop:isAccept ? 20 : 40}}
-    placeholder="Enter remarks (optional)"
-    placeholderTextColor={colors.text}
-    onChangeText={text => setRemarks(text)}
-    defaultValue={remarks}
-    multiline={true}
-    underlineColorAndroid="transparent"
-/>
-            </View>
+                    <TextInput
+                        style={[styles.input, {
+                            minHeight: 100,
+                            marginTop: isAccept ? 20 : 40,
+                            borderWidth: 0.5,
+                        }]}
+                        placeholder="Enter remarks (optional)"
+                        placeholderTextColor={colors.text}
+                        onChangeText={text => setRemarks(text)}
+                        defaultValue={remarks}
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                    />
+                </View>
 
-<View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-<TouchableOpacity
-    onPress={onSubmit}
-    activeOpacity={0.8}
-    style={{ padding:15,backgroundColor:'#65BDF2',flex:1 }}
->
-    <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>SAVE</Text>
-</TouchableOpacity>
-{/* <TouchableOpacity
-    onPress={onSubmit}
-    activeOpacity={0.8}
-    style={{ margin: 10, padding:12,backgroundColor:'red',width:'40%',borderRadius:24 }}
->
-    <Text style={{color:'#fff', fontSize:18,fontWeight:'bold',textAlign:'center'}}>Reject</Text>
-</TouchableOpacity> */}
-</View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        onPress={onSubmit}
+                        activeOpacity={0.8}
+                        style={{ padding: 15, backgroundColor: '#65BDF2', flex: 1 }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>DONE</Text>
+                    </TouchableOpacity>
+                </View>
 
-</View >
+            </View >
 
         </Modal>
-        );
+    );
 }
 
 export default ActionModal;
@@ -135,10 +142,9 @@ const styles = StyleSheet.create({
     input: {
         color: "#505050",
         fontSize: 16,
-        margin:10,
-        borderWidth:0.5,
-        flex:1,
-        borderRadius:5
+        margin: 10,
+        flex: 1,
+        borderRadius: 5
     },
 
 })

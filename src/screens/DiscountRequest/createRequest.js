@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, ImageBackgroundBase, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native';
 import colors from '../../constants/Colors'
-import { CheckBox } from '@ui-kitten/components';
 import useRequest from '../../hooks/useRequest';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
@@ -143,11 +142,11 @@ const CreateRequest = ({ navigation }) => {
 
             <View style={styles.navBar}>
 
-                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.push("ListIndex")}>
                     <Icon name='arrow-left' size={30} color={colors.text} style={{ marginLeft: 15 }} />
                 </TouchableOpacity>
 
-                <Text style={styles.navTitle}>CREATE DISCOUNT REQUESTS</Text>
+                <Text style={styles.navTitle}>CREATE DISCOUNT REQUEST</Text>
             </View>
 
             <ScrollView style={styles.formView} showsVerticalScrollIndicator={false}>
@@ -228,29 +227,69 @@ const CreateRequest = ({ navigation }) => {
                 }
 
                 <View style={[styles.checkBoxView, { marginTop: 20 }]}>
-                    <CheckBox
+                    {/* <CheckBox
                         checked={isMSIL_Ew}
                         onChange={nextChecked => setIsMSIL_Ew(nextChecked)}>
                         <Text style={styles.input}>MSIL-EW?</Text>
-                    </CheckBox>
+                    </CheckBox> */}
+                    <TouchableOpacity
+                        onPress={() => setIsMSIL_Ew(!isMSIL_Ew)}
+                        activeOpacity={1}
+                    >
+                        <>
+                            {
+                                !isMSIL_Ew ?
+                                    <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
+                                    <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
+                            }
+                            <Text style={styles.input}>MSIL-EW?</Text>
+                        </>
+                    </TouchableOpacity>
 
-                    <CheckBox
+                    {/* <CheckBox
                         style={{ marginLeft: 50 }}
                         checked={isR_Ew}
                         onChange={nextChecked => setIsR_Ew(nextChecked)}>
                         <Text style={styles.input}>R-EW?</Text>
-                    </CheckBox>
+                    </CheckBox> */}
+
+                    <TouchableOpacity
+                        onPress={() => setIsR_Ew(!isR_Ew)}
+                        activeOpacity={1}
+                    >
+                        <>
+                            {
+                                !isR_Ew ?
+                                    <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
+                                    <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
+                            }
+                            <Text style={styles.input}>R-EW?</Text>
+                        </>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={[styles.checkBoxView, { marginBottom: 20 }]}>
 
-                    <CheckBox
+                    {/* <CheckBox
                         checked={isFinance}
                         onChange={nextChecked => setIsFinance(nextChecked)}>
                         <Text style={styles.input}>
                             Will customer finance the car?
                     </Text>
-                    </CheckBox>
+                    </CheckBox> */}
+                    <TouchableOpacity
+                        onPress={() => setIsFinance(!isFinance)}
+                        activeOpacity={1}
+                    >
+                        <>
+                            {
+                                !isFinance ?
+                                    <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
+                                    <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
+                            }
+                            <Text style={styles.input}>Will customer finance the car?</Text>
+                        </>
+                    </TouchableOpacity>
                 </View>
                 <View
                     style={[styles.selectView,
@@ -390,6 +429,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     checkBoxView: {
+        flex: 1,
         marginVertical: 15,
         flexDirection: 'row',
         alignItems: 'center'

@@ -164,7 +164,7 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                     </View>
                 }
             </>
-            < ActionModal reqId={reqId} status={status} hide={() => setShowModal(false)} show={showModal} isAccept={isAccept} />
+            < ActionModal reqId={reqId} hide={() => setShowModal(false)} show={showModal} isAccept={isAccept} />
         </TouchableOpacity >
     )
 }

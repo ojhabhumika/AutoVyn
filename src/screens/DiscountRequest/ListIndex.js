@@ -5,9 +5,7 @@ import RequestList from './RequestList'
 const { width } = Dimensions.get('window')
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../constants/Colors'
-import {
-    Icon
-} from '@ui-kitten/components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ListIndex = ({ navigation }) => {
 
@@ -71,7 +69,7 @@ const ListIndex = ({ navigation }) => {
                 <View style={styles.navBar}>
 
                     <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
-                        <Icon name='arrow-back-outline' width={35} height={35} fill={colors.text} style={{ marginLeft: 15 }} />
+                        <Icon name='arrow-left' size={30} color={colors.text} style={{ marginLeft: 15 }} />
                     </TouchableOpacity>
 
                     <Text style={styles.navTitle}>DISCOUNT REQUESTS</Text>
@@ -80,7 +78,7 @@ const ListIndex = ({ navigation }) => {
                         <TouchableOpacity
                             style={{ padding: 10 }}
                             onPress={() => navigation.push('CreateRequest')}>
-                            <Icon name='plus-circle-outline' width={30} height={30} fill={colors.text} />
+                            <Icon name='plus-thick' size={30} color={colors.text} style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     }
 
