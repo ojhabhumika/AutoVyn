@@ -33,14 +33,19 @@ const NavigationBar = ({ title, navigation }) => {
             height: 55,
             flexDirection: 'row',
             alignItems: 'center',
+            marginVertical: 5
             //borderBottomColor: "#e3e3e3",
             //borderBottomWidth: 1,
-            shadowColor: 'gray',
-            elevation: 9,
-            shadowOpacity: 1,
+            // shadowColor: 'gray',
+            // elevation: 9,
+            // shadowOpacity: 1,
         }}>
 
-            <Text style={{ flex: 1, marginLeft: 22, color: '#FFF', fontSize: 20, fontWeight: 'bold' }}>{title}</Text>
+            <Text style={{
+                flex: 1, marginLeft: 22,
+                color: '#FFF', fontSize: 25, fontWeight: 'bold',
+                textAlign: "center"
+            }}>{title}</Text>
 
             <Popover
                 style={{ marginTop: (Platform.OS == 'ios' ? -40 : 0) }}
