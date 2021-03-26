@@ -9,9 +9,12 @@ const { height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationBar from '../components/NavigationBar'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../constants/Colors'
 
 const Dashboard = ({ navigation }) => {
 
+    const [userName, setUserName] = useState()
+    const [userLocations, setUserLocations] = useState([])
     const [canUserCreateReq, setUserCreateReq] = useState(false)
     const [canUserApproveReq, setUserApproveReq] = useState(false)
 
@@ -20,6 +23,10 @@ const Dashboard = ({ navigation }) => {
             const asyncData = await AsyncStorage.getItem('@user')
             const data = JSON.parse(asyncData)
             if (data) {
+                //console.log('data :>> ', data);
+                setUserName(data.user?.userName)
+                let locs = data.userLocations.join(", ")
+                setUserLocations(locs)
                 setUserCreateReq(data.user.canRaiseDiscount)
                 setUserApproveReq(data.user.canApproveDiscount)
             }
@@ -78,10 +85,32 @@ const Dashboard = ({ navigation }) => {
 
     return (
         <Layout style={styles.container}>
-            <NavigationBar
-                title={"AUTO-VYN"}
-                navigation={navigation}
-            />
+            <View>
+                <NavigationBar
+                    title={"AUTO-VYN"}
+                    navigation={navigation}
+                />
+                <View style={{
+                    flexDirection: "row",
+                    marginHorizontal: 30,
+                    alignItems: "center",
+                    marginTop: 10
+                }}>
+                    {/* <View style={{ paddingRight: 15 }}>
+                        <Icon name={'account-tie'} size={45} color={"#FFF"} />
+                    </View> */}
+                    <View style={{
+
+                        flexDirection: "column",
+                        //marginBottom: 20,
+                        borderRadius: 10,
+                        //padding: 10
+                    }}>
+                        <Text style={[styles.userText, { fontSize: 22 }]}>Welcome, {userName}!</Text>
+                        {/* <Text style={styles.userText}>{userLocations}</Text> */}
+                    </View>
+                </View>
+            </View>
             <View style={styles.listContainer}>
 
                 <FlatList
@@ -96,8 +125,6 @@ const Dashboard = ({ navigation }) => {
         </Layout>
     )
 }
-
-
 
 const ListItem = ({ item }) => {
 
@@ -117,8 +144,8 @@ const ListItem = ({ item }) => {
             style={styles.item}>
             <View style={{
                 backgroundColor: item.bg,
-                padding: 20,
-                borderRadius: 50
+                padding: 15,
+                borderRadius: 60
             }}>
                 {item.icon}
             </View>
@@ -137,8 +164,8 @@ export default Dashboard
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#E3E3E3'
+        justifyContent: 'flex-start',
+        backgroundColor: colors.logoBlue,
     },
     toolbar: {
         width: '100%',
@@ -149,10 +176,10 @@ const styles = StyleSheet.create({
     item: {
         maxWidth: Dimensions.get('window').width / 2,
         flex: 0.5,
-        height: height / 4,
+        height: height / 5,
         backgroundColor: '#fff',
-        marginBottom: 16,
-        marginHorizontal: 8,
+        marginBottom: 20,
+        marginHorizontal: 12,
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
@@ -166,6 +193,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 10,
-        marginVertical: 25
+        paddingVertical: 40,
+        bottom: 0,
+        backgroundColor: "#f1f1ff",
+        bottom: 0,
+        position: "absolute",
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25
+    },
+    userText: {
+        fontSize: 18, color: "#FFF",
+        fontWeight: "bold",
+        paddingBottom: 2
     }
 })
