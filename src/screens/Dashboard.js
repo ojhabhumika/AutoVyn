@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Layout } from '@ui-kitten/components';
 import {
     View, StyleSheet,
     Dimensions, TouchableOpacity
@@ -84,7 +83,7 @@ const Dashboard = ({ navigation }) => {
     }]
 
     return (
-        <Layout style={styles.container}>
+        <View style={styles.container}>
             <View>
                 <NavigationBar
                     title={"AUTO-VYN"}
@@ -122,7 +121,7 @@ const Dashboard = ({ navigation }) => {
                     )}
                 />
             </View>
-        </Layout>
+        </View>
     )
 }
 

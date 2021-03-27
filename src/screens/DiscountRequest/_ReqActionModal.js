@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions ,Modal} from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
-import { Button, ButtonGroup, Modal } from '@ui-kitten/components';
 const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -48,22 +47,23 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
         <Modal
             visible={show}
             style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0, top: '50%' }}
-
-            backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+            transparent={true}
             onBackdropPress={resetModal} >
+                <TouchableOpacity
+                onPress={resetModal} style={{backgroundColor: 'rgba(0, 0, 0, 0.8)',flex:1}}>
             <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', width: width }}>
                 <View style={{ padding: 15, flex: 1 }}>
 
-                    <Text>
-                        Request-Id #{reqId}
-                    </Text>
+                    
                     <TouchableOpacity
                         onPress={resetModal}
                         style={{ position: 'absolute', right: 15, top: 15 }}
                         activeOpacity={0.8}>
                         <Icon name="close" color={'gray'} size={30} />
                     </TouchableOpacity>
-
+                    <Text style={{ marginHorizontal: 10,marginTop:10, color: '#000' , fontSize:18,fontWeight:'bold'}}>
+                        Request Id: #{reqId}
+                    </Text>
                     {
 
                         isAccept &&
@@ -107,8 +107,7 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
                     <TextInput
                         style={[styles.input, {
                             minHeight: 100,
-                            marginTop: isAccept ? 20 : 40,
-                            borderWidth: 0.5,
+                            marginTop: isAccept ? 0 : 40
                         }]}
                         placeholder="Enter remarks (optional)"
                         placeholderTextColor={colors.text}
@@ -130,7 +129,7 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
                 </View>
 
             </View >
-
+            </TouchableOpacity>
         </Modal>
     );
 }
@@ -144,7 +143,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         margin: 10,
         flex: 1,
-        borderRadius: 5
+        borderRadius: 5,
+        borderBottomColor:'gray',
+        borderBottomWidth:1
     },
 
 })

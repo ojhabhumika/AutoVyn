@@ -12,7 +12,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import org.unimodules.adapters.react.ModuleRegistryAdapter;
 import org.unimodules.adapters.react.ReactModuleRegistryProvider;
 
@@ -41,7 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       packages.add(new LottiePackage());
-      packages.add(new SplashScreenReactPackage());
+//      packages.add(new SplashScreenReactPackage());
       return packages;
     }
 

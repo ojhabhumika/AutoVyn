@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import {
-    Layout
-} from '@ui-kitten/components';
 import { View, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Text } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -54,7 +51,7 @@ const Login = ({ navigation }) => {
     }
 
     return (
-        <Layout style={styles.container}>
+        <View style={styles.container}>
             <View style={{
                 height: '40%', alignItems: 'center',
                 justifyContent: 'center', paddingTop: 50
@@ -144,7 +141,7 @@ const Login = ({ navigation }) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-        </Layout >
+        </View >
     )
 }
 
@@ -153,7 +150,8 @@ export default Login
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor:'#fff'
     },
     login: {
         backgroundColor: '#65BDF2',
