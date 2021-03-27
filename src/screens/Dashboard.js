@@ -125,7 +125,7 @@ const Dashboard = ({ navigation }) => {
 const ListItem = ({ item }) => {
 
     const onPress = () => {
-        if (!item.permission) {
+        if (item.permission) {
             item.onPress();
         }
         else {

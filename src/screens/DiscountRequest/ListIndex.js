@@ -74,7 +74,7 @@ const ListIndex = ({ navigation }) => {
 
                     <Text style={styles.navTitle}>DISCOUNT REQUESTS</Text>
                     {
-                        !canUserCreateReq &&
+                        canUserCreateReq &&
                         <TouchableOpacity
                             style={{ padding: 10 }}
                             onPress={() => navigation.push('CreateRequest')}>
