@@ -15,7 +15,7 @@ const NavigationBar = ({ title, navigation }) => {
         return <TouchableOpacity
             style={{ padding: 10 }}
             onPress={() => setShowOptionMenu(true)}>
-            <Icon name='dots-vertical' size={30} color={"#FFF"} />
+            <Icon name='dots-vertical' size={30} color={"black"} />
         </TouchableOpacity>
     }
 
@@ -29,31 +29,47 @@ const NavigationBar = ({ title, navigation }) => {
     return (
         <View style={{
             width: '100%',
-            backgroundColor: colors.logoBlue,
+            backgroundColor: colors.white,
             height: 55,
             flexDirection: 'row',
             alignItems: 'center',
-            marginVertical: 5
-            //borderBottomColor: "#e3e3e3",
-            //borderBottomWidth: 1,
-            // shadowColor: 'gray',
-            // elevation: 9,
-            // shadowOpacity: 1,
         }}>
 
             <Text style={{
                 flex: 1, marginLeft: 22,
-                color: '#FFF', fontSize: 25, fontWeight: 'bold',
+                color: colors.text, fontSize: 25, fontWeight: 'bold',
                 textAlign: "center"
             }}>{title}</Text>
 
             <Popover
-                style={{ marginTop: (Platform.OS == 'ios' ? -40 : 0) }}
+                style={{
+                    marginTop: (Platform.OS == 'ios' ? -40 : 0),
+                    marginRight: 20
+                }}
                 visible={showMenuOption}
                 anchor={renderMenu}
                 onBackdropPress={() => setShowOptionMenu(false)}>
-                <TouchableOpacity activeOpacity={0.8} onPress={handleLogout} >
-                    <Text style={{ marginBottom: 5, color: 'gray', paddingHorizontal: 20, paddingVertical: 15, fontSize: 18, fontWeight: 'bold' }}>Log Out</Text>
+                <TouchableOpacity activeOpacity={0.8} onPress={handleLogout}
+                    style={{
+                        flexDirection:"row",
+                        marginBottom: 5, padding: 10,
+                    }}
+                >
+                    <>
+                    <View style={{paddingRight:5}}>
+                    <Icon name={"logout"} size={22} color={colors.text} />
+                    </View>
+                    <Text style={{
+
+                        color: colors.text,
+                        fontSize: 18, fontWeight: 'bold',
+
+                    }}>
+                        
+                         Log Out
+                       
+                    </Text>
+                    </>
                 </TouchableOpacity>
             </Popover>
 

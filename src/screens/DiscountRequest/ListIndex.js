@@ -87,6 +87,8 @@ const ListIndex = ({ navigation }) => {
                 <TabBarView selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
             </View>
             <RequestList
+                discountReqList={discountReqList}
+                setDiscountReqList={setDiscountReqList}
                 filteredList={filteredList}
                 userNames={userNames}
                 loading={loading}

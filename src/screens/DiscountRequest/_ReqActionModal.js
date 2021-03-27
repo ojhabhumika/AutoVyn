@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions, ToastAndroid } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
 import { Button, ButtonGroup, Modal } from '@ui-kitten/components';
 const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
+const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList, setDiscountReqList }) => {
 
     const { makeRequest } = useRequest();
 
@@ -22,19 +22,27 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
 
     const onSubmit = () => {
 
-        checkDiscount()
-        if (!isDiscountValid) return false
+        if (isAccept) {
+            checkDiscount()
+            if (!isDiscountValid) return false
+        }
 
         makeRequest({
-            url: `/discountRequests${reqId}`,
+            url: `/discountRequests/${reqId}`,
             method: 'PUT',
             body: {
                 status: isAccept, allowedDiscount: discount, remarks
             },
             onSuccess: (res) => {
-                // reload page
+                discountReqList.find(x => x.reqId == reqId).status = isAccept
+                setDiscountReqList([...discountReqList])
+                let message = isAccept ? "Request Accepted!" : "Request Rejected!"
+                ToastAndroid.show(message, ToastAndroid.SHORT)
             },
-            onFailure: () => setLoading(false)
+            onFailure: () => {
+                hide()
+                ToastAndroid.show("Error occured", ToastAndroid.SHORT)
+            }
         })
     }
 
@@ -54,7 +62,7 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
             <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', width: width }}>
                 <View style={{ padding: 15, flex: 1 }}>
 
-                    <Text>
+                    <Text style={{ marginHorizontal: 15, fontSize: 20 }}>
                         Request-Id #{reqId}
                     </Text>
                     <TouchableOpacity
@@ -107,7 +115,7 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
                     <TextInput
                         style={[styles.input, {
                             minHeight: 100,
-                            marginTop: isAccept ? 20 : 40,
+                            marginTop: 20,
                             borderWidth: 0.5,
                         }]}
                         placeholder="Enter remarks (optional)"
@@ -116,6 +124,7 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
                         defaultValue={remarks}
                         multiline={true}
                         underlineColorAndroid="transparent"
+                        textAlignVertical={'top'}
                     />
                 </View>
 
