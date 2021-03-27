@@ -69,16 +69,16 @@ const ListIndex = ({ navigation }) => {
                 <View style={styles.navBar}>
 
                     <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
-                        <Icon name='arrow-left' size={30} color={colors.text} style={{ marginLeft: 15 }} />
+                        <Icon name='arrow-left' size={30} color={colors.white} style={{ marginLeft: 15 }} />
                     </TouchableOpacity>
 
                     <Text style={styles.navTitle}>DISCOUNT REQUESTS</Text>
                     {
-                        canUserCreateReq &&
+                        !canUserCreateReq &&
                         <TouchableOpacity
                             style={{ padding: 10 }}
                             onPress={() => navigation.push('CreateRequest')}>
-                            <Icon name='plus-thick' size={30} color={colors.text} style={{ marginLeft: 15 }} />
+                            <Icon name='plus-thick' size={30} color={colors.white} style={{ marginRight: 5 }} />
                         </TouchableOpacity>
                     }
 
@@ -145,21 +145,21 @@ const styles = StyleSheet.create({
     },
     navBar: {
         width: '100%',
-        backgroundColor: '#FFF',
-        height: 55,
+        backgroundColor: '#65BDF2',
+        height: 65,
         flexDirection: 'row',
         alignItems: 'center',
-        borderBottomColor: "#e3e3e3",
-        borderBottomWidth: 2,
+        // borderBottomColor: "#e3e3e3",
+        // borderBottomWidth: 2,
         // shadowColor: 'gray',
         // elevation: 9,
         // shadowOpacity: 1
     },
     navTitle: {
         flex: 1,
-        marginLeft: 22,
-        color: colors.text,
-        fontSize: 20,
+        marginLeft: 15,
+        color: colors.white,
+        fontSize: 18,
         fontWeight: 'bold'
     }
 })

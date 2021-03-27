@@ -9,6 +9,7 @@ const colors = {
     lightBlue: "#e8f4f8",
     lightRed: "#ffe5e5",
     lightGreen: "#d2f8d2",
+    logoBlueLight: "#009ED640",
     white: "#FFF"
 }
 

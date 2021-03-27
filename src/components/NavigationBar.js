@@ -18,7 +18,7 @@ const NavigationBar = ({ title, navigation }) => {
     return (
         <View style={{
             width: '100%',
-            backgroundColor: colors.white,
+            backgroundColor: colors.logoBlue,
             height: 55,
             flexDirection: 'row',
             alignItems: 'center',

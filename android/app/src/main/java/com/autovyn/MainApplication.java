@@ -40,7 +40,6 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       packages.add(new LottiePackage());
-//      packages.add(new SplashScreenReactPackage());
       return packages;
     }
 

@@ -91,7 +91,7 @@ const Dashboard = ({ navigation }) => {
                 />
                 <View style={{
                     flexDirection: "row",
-                    marginHorizontal: 30,
+                    marginHorizontal: 20,
                     alignItems: "center",
                 }}>
 
@@ -104,16 +104,19 @@ const Dashboard = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-            <View style={styles.listContainer}>
+            <View style={{flex:1,backgroundColor:'#fff',borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,paddingTop:50}}>
+                <View style={styles.listContainer}>
 
-                <FlatList
-                    data={data}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={2}
-                    renderItem={({ item }) => (
-                        <ListItem item={item} />
-                    )}
-                />
+                    <FlatList
+                        data={data}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={2}
+                        renderItem={({ item }) => (
+                            <ListItem item={item} />
+                        )}
+                    />
+                </View>
             </View>
         </View>
     )
@@ -122,7 +125,7 @@ const Dashboard = ({ navigation }) => {
 const ListItem = ({ item }) => {
 
     const onPress = () => {
-        if (item.permission) {
+        if (!item.permission) {
             item.onPress();
         }
         else {
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        backgroundColor: colors.white,
+        backgroundColor: colors.logoBlue,
     },
     toolbar: {
         width: '100%',
@@ -185,18 +188,16 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
-        paddingVertical: 40,
+        paddingHorizontal: 10,
+        paddingBottom: 20,
+        paddingTop:50,
+        backgroundColor: colors.logoBlueLight,
         bottom: 0,
-        backgroundColor: colors.logoBlue,
-        bottom: 0,
-        position: "absolute",
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25
+        position: "absolute"
     },
     userText: {
         fontSize: 20,
-        color: "#000",
+        color: "#fff",
         paddingBottom: 8,
     }
 })
