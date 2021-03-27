@@ -86,27 +86,21 @@ const Dashboard = ({ navigation }) => {
         <View style={styles.container}>
             <View>
                 <NavigationBar
-                    title={"AUTO-VYN"}
+                    //title={"AUTO-VYN"}
                     navigation={navigation}
                 />
                 <View style={{
                     flexDirection: "row",
                     marginHorizontal: 30,
                     alignItems: "center",
-                    marginTop: 10
                 }}>
-                    {/* <View style={{ paddingRight: 15 }}>
-                        <Icon name={'account-tie'} size={45} color={"#FFF"} />
-                    </View> */}
-                    <View style={{
 
+                    <View style={{
                         flexDirection: "column",
-                        //marginBottom: 20,
                         borderRadius: 10,
-                        //padding: 10
                     }}>
-                        <Text style={[styles.userText, { fontSize: 22 }]}>Welcome, {userName}!</Text>
-                        {/* <Text style={styles.userText}>{userLocations}</Text> */}
+                        <Text style={[styles.userText, { fontSize: 25, fontWeight: "bold", }]}>Welcome, {userName}</Text>
+                        <Text style={styles.userText}>{userLocations}</Text>
                     </View>
                 </View>
             </View>
@@ -164,7 +158,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        backgroundColor: colors.logoBlue,
+        backgroundColor: colors.white,
     },
     toolbar: {
         width: '100%',
@@ -194,15 +188,15 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingVertical: 40,
         bottom: 0,
-        backgroundColor: "#f1f1ff",
+        backgroundColor: colors.logoBlue,
         bottom: 0,
         position: "absolute",
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25
     },
     userText: {
-        fontSize: 18, color: "#FFF",
-        fontWeight: "bold",
-        paddingBottom: 2
+        fontSize: 20,
+        color: "#000",
+        paddingBottom: 8,
     }
 })

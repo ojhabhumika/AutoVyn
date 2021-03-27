@@ -8,7 +8,7 @@ import ActionModal from './_ReqActionModal'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const RequestList = ({ filteredList, userNames, loading, setLoading,
-    selectedIndex, canUserApproveReq }) => {
+    selectedIndex, canUserApproveReq, discountReqList, setDiscountReqList }) => {
 
     const [groupedList, setGroupedList] = useState([])
     const [groupLoading, setGroupLoading] = useState(true)
@@ -55,10 +55,12 @@ const RequestList = ({ filteredList, userNames, loading, setLoading,
                                                     <Text style={styles.headingText}>{data.title}</Text>
                                                     {
                                                         data.list.map(e => <RequestCard
+                                                            discountReqList={discountReqList}
                                                             key={e.reqId}
                                                             requestData={e}
                                                             user={userNames.find(user => user.code == e.discountRaisedById)}
                                                             canUserApproveReq={canUserApproveReq}
+                                                            setDiscountReqList={setDiscountReqList}
                                                         />)
                                                     }
                                                 </>
@@ -82,9 +84,9 @@ const RequestList = ({ filteredList, userNames, loading, setLoading,
     )
 }
 
-const RequestCard = ({ requestData, user, canUserApproveReq }) => {
+const RequestCard = ({ requestData, user, canUserApproveReq, discountReqList, setDiscountReqList }) => {
 
-    const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
+    const { IsREw, isMSILEw, accessoriesAmt, carVariant, customerName, customerPhone,
         isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
 
     const [showModal, setShowModal] = useState(false)
@@ -145,9 +147,10 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         <TouchableOpacity
                             style={[styles.actionButton, { backgroundColor: "#e7f7f5" }]}
                             activeOpacity={0.8}
-                            onPress={() =>  {
+                            onPress={() => {
                                 setIsAccept(true)
-                                setShowModal(true)}}>
+                                setShowModal(true)
+                            }}>
                             <Icon name="checkmark" size={25} color={'#339989'} />
                             <Text style={[styles.actionText, { color: "#339989" }]}>Accept</Text>
                         </TouchableOpacity>
@@ -155,16 +158,19 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         <TouchableOpacity
                             style={[styles.actionButton, { backgroundColor: "#ffebee" }]}
                             activeOpacity={0.8}
-                            onPress={() => { 
+                            onPress={() => {
                                 setIsAccept(false)
-                                setShowModal(true) }}>
+                                setShowModal(true)
+                            }}>
                             <Icon name="close" size={25} color={'#ef5350'} />
                             <Text style={[styles.actionText, { color: "#ef5350" }]}>Reject</Text>
                         </TouchableOpacity>
                     </View>
                 }
             </>
-            < ActionModal reqId={reqId} hide={() => setShowModal(false)} show={showModal} isAccept={isAccept} />
+            < ActionModal reqId={reqId} hide={() => setShowModal(false)} show={showModal} isAccept={isAccept}
+                discountReqList={discountReqList}
+                setDiscountReqList={setDiscountReqList} />
         </TouchableOpacity >
     )
 }

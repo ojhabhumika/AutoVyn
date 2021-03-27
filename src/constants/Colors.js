@@ -4,11 +4,12 @@ const colors = {
     icon: "#808080",
     green: "#006400",
     logoRed: "#E5322D",
-    logoYellow: "#F69C2C",
+    logoYellow: "#FCCC5E",
     logoBlue: "#009ED6",
-    lightBlue: "#e8f4f8", 
+    lightBlue: "#e8f4f8",
     lightRed: "#ffe5e5",
-    lightGreen :"#d2f8d2"
+    lightGreen: "#d2f8d2",
+    white: "#FFF"
 }
 
 export default colors

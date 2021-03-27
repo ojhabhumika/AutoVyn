@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions ,Modal} from 'react-native';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions ,Modal,ToastAndroid} from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
 const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
+const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList, setDiscountReqList }) => {
 
     const { makeRequest } = useRequest();
 
@@ -21,19 +21,27 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
 
     const onSubmit = () => {
 
-        checkDiscount()
-        if (!isDiscountValid) return false
+        if (isAccept) {
+            checkDiscount()
+            if (!isDiscountValid) return false
+        }
 
         makeRequest({
-            url: `/discountRequests${reqId}`,
+            url: `/discountRequests/${reqId}`,
             method: 'PUT',
             body: {
                 status: isAccept, allowedDiscount: discount, remarks
             },
             onSuccess: (res) => {
-                // reload page
+                discountReqList.find(x => x.reqId == reqId).status = isAccept
+                setDiscountReqList([...discountReqList])
+                let message = isAccept ? "Request Accepted!" : "Request Rejected!"
+                ToastAndroid.show(message, ToastAndroid.SHORT)
             },
-            onFailure: () => setLoading(false)
+            onFailure: () => {
+                hide()
+                ToastAndroid.show("Error occured", ToastAndroid.SHORT)
+            }
         })
     }
 
@@ -115,6 +123,7 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
                         defaultValue={remarks}
                         multiline={true}
                         underlineColorAndroid="transparent"
+                        textAlignVertical={'top'}
                     />
                 </View>
 
