@@ -89,23 +89,24 @@ const Dashboard = ({ navigation }) => {
                     //title={"AUTO-VYN"}
                     navigation={navigation}
                 />
-                <View style={{
-                    flexDirection: "row",
-                    marginHorizontal: 20,
-                    alignItems: "center",
-                }}>
 
-                    <View style={{
-                        flexDirection: "column",
-                        borderRadius: 10,
-                    }}>
-                        <Text style={[styles.userText, { fontSize: 25, fontWeight: "bold", }]}>Welcome, {userName}</Text>
-                        <Text style={styles.userText}>{userLocations}</Text>
-                    </View>
+                <View style={{
+                    flexDirection: "column",
+                    borderRadius: 10,
+                    marginBottom: 25,
+                    marginHorizontal: 25,
+
+                }}>
+                    <Text style={[styles.userText, { fontSize: 25, fontWeight: "bold", }]}>Welcome, {userName}</Text>
+                    <Text style={styles.userText}>{userLocations}</Text>
                 </View>
             </View>
-            <View style={{flex:1,backgroundColor:'#fff',borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,paddingTop:50}}>
+
+            <View style={{
+                flex: 1, backgroundColor: "#fff",
+                borderTopLeftRadius: 40,
+                borderTopRightRadius: 40, paddingTop: 10
+            }}>
                 <View style={styles.listContainer}>
 
                     <FlatList
@@ -183,21 +184,23 @@ const styles = StyleSheet.create({
         shadowColor: "#e3e3e3",
         shadowOpacity: 0.5,
         elevation: 5,
+        borderWidth: 1,
+        borderColor: "#e3e3e3"
     },
     listContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        paddingBottom: 20,
-        paddingTop:50,
-        backgroundColor: colors.logoBlueLight,
+        paddingBottom: 30,
+        paddingTop: 10,
+        backgroundColor: "#fff",
         bottom: 0,
         position: "absolute"
     },
     userText: {
         fontSize: 20,
-        color: "#fff",
+        color: "#FFF",
         paddingBottom: 8,
     }
 })

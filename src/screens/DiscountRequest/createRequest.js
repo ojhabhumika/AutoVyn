@@ -226,58 +226,75 @@ const CreateRequest = ({ navigation }) => {
                     </Text>
                 }
 
-                <View style={[styles.checkBoxView, { marginTop:10 }]}>
-                    <View style={{width:'50%'}}>
+                <View style={{
+                    flex: 1, flexDirection: "row",
+                    alignItems: "center",
+                    marginVertical: 10,
+                    //backgroundColor: "red"
+                }}>
+
                     <TouchableOpacity
                         onPress={() => setIsMSIL_Ew(!isMSIL_Ew)}
                         activeOpacity={1}
-                    >
-                        <>
+                        style={{
+                            flex: 1, flexDirection: "row",
+                            alignItems: "center",
+                        }}
+                    ><>
                             {
                                 !isMSIL_Ew ?
                                     <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
                                     <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
                             }
-                            <Text style={styles.input}>MSIL-EW?</Text>
+                            <Text style={styles.checkInput}>
+                                {"  "}MSIL-EW?
+                            </Text>
                         </>
                     </TouchableOpacity>
-                    </View>
 
-                    <View>
                     <TouchableOpacity
                         onPress={() => setIsR_Ew(!isR_Ew)}
                         activeOpacity={1}
-                    >
-                        <>
+                        style={{
+                            flex: 1, flexDirection: "row",
+                            alignItems: "center",
+                            marginLeft: 60
+                        }}
+                    ><>
                             {
                                 !isR_Ew ?
                                     <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
                                     <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
                             }
-                            <Text style={styles.input}>R-EW?</Text>
+                            <Text style={styles.checkInput}>
+
+                                {"  "}R-EW?</Text>
                         </>
                     </TouchableOpacity>
-                    </View>
+
                 </View>
 
-                <View style={[styles.checkBoxView, { marginBottom: 5 }]}>
-                    <TouchableOpacity
-                        onPress={() => setIsFinance(!isFinance)}
-                        activeOpacity={1}
-                    >
-                        <>
-                            {
-                                !isFinance ?
-                                    <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
-                                    <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
-                            }
-                            <Text style={styles.input}>Will customer finance the car?</Text>
-                        </>
-                    </TouchableOpacity>
-                </View>
+
+                <TouchableOpacity
+                    style={[styles.checkBoxView, { marginBottom: 8 }]}
+                    onPress={() => setIsFinance(!isFinance)}
+                    activeOpacity={1}
+                >
+                    <>
+                        {
+                            !isFinance ?
+                                <Icon name={"checkbox-blank-outline"} size={30} color={"#3D3D3D"} /> :
+                                <Icon name={"checkbox-marked-outline"} size={30} color={"#3D3D3D"} />
+                        }
+                        <Text style={styles.checkInput}>
+
+                            {"  "}Will customer finance the car?</Text>
+                    </>
+                </TouchableOpacity>
+
                 <View
                     style={[styles.selectView,
-                    { borderBottomColor: (!showBankNameMsg ? "gray" : colors.logoRed), marginLeft:10 }
+                    { borderBottomColor: (!showBankNameMsg ? "gray" : colors.logoRed), marginLeft: 10 }
                     ]}>
                     <Picker
                         selectedValue={bankName}
@@ -304,11 +321,13 @@ const CreateRequest = ({ navigation }) => {
                     </Text>
                 }
                 <View style={[styles.inputView,
-                { borderBottomColor: (!showLoanAmtMsg ? "gray" : colors.logoRed),marginLeft:18, marginRight:10 }
+                { borderBottomColor: (!showLoanAmtMsg ? "gray" : colors.logoRed), marginLeft: 18, marginRight: 10 }
                 ]}>
                     <TextInput
-                        style={{color: "#505050",
-                        fontSize: 16,}}
+                        style={{
+                            color: "#505050",
+                            fontSize: 16,
+                        }}
                         placeholder="Loan Amount"
                         placeholderTextColor={colors.text}
                         onChangeText={text => setLoanAmount(text)}
@@ -326,7 +345,11 @@ const CreateRequest = ({ navigation }) => {
 
                 <View
                     style={[styles.selectView,
-                    { borderBottomColor: (!showActionIdMsg ? "gray" : colors.logoRed) }
+                    {
+                        borderBottomColor: (!showActionIdMsg ? "gray" : colors.logoRed),
+                        //flex: 1, flexDirection: "row",
+                        width: "100%",
+                    }
                     ]}>
                     {/* <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text> */}
 
@@ -337,7 +360,7 @@ const CreateRequest = ({ navigation }) => {
                         }
                     >
                         <Picker.Item
-                            value="" label="* Select Reference" color={colors.text}
+                            value="" label="Select Reference" color={colors.text}
                         />
                         {
                             approvers.map((s, i) => {
@@ -386,7 +409,7 @@ const CreateRequest = ({ navigation }) => {
             >
                 <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>SEND REQUEST</Text>
             </TouchableOpacity>
-        </View>
+        </View >
     )
 }
 
@@ -407,6 +430,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginHorizontal: 5,
     },
+    checkInput: {
+        color: "#505050",
+        fontSize: 16,
+        //marginVertical: 2,
+    },
     inputView: {
         borderBottomWidth: 0.8,
         marginBottom: 10,
@@ -415,9 +443,9 @@ const styles = StyleSheet.create({
     },
     checkBoxView: {
         flex: 1,
-        marginVertical: 8,
+        marginVertical: 10,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: "center"
     },
     errorText: {
         fontSize: 16,

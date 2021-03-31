@@ -30,18 +30,18 @@ const NavigationBar = ({ title, navigation }) => {
                 textAlign: "center"
             }}>{title}</Text>
 
-                
-                <TouchableOpacity
-                    style={{ padding: 10 }}
-                    activeOpacity={0.8}
-                    onPress={() => setShowOptionMenu(!showMenuOption)}>
-                    <Icon name='dots-vertical' size={30} color={"#FFF"} />
-                </TouchableOpacity>
-                {showMenuOption && 
-                <TouchableOpacity activeOpacity={0.8} onPress={handleLogout} 
-                style={{backgroundColor:'#fff',paddingHorizontal:20,paddingVertical: 8,position:'absolute',top:45,right:10,borderRadius:5,shadowColor:'gray',elevation:6,shadowOffset:0.5}}>
-                    <Text style={{ marginBottom: 5, color: 'gray',  fontSize: 18, fontWeight: 'bold' }}>Log Out</Text>
-                </TouchableOpacity> }
+
+            <TouchableOpacity
+                style={{ padding: 10 }}
+                activeOpacity={0.8}
+                onPress={() => setShowOptionMenu(!showMenuOption)}>
+                <Icon name='dots-vertical' size={30} color={"#FFF"} />
+            </TouchableOpacity>
+            {showMenuOption &&
+                <TouchableOpacity activeOpacity={0.8} onPress={handleLogout}
+                    style={{ backgroundColor: '#fff', paddingHorizontal: 20, paddingVertical: 8, position: 'absolute', top: 45, right: 10, borderRadius: 5, shadowColor: 'gray', elevation: 6, shadowOffset: 0.5 }}>
+                    <Text style={{ marginBottom: 5, color: 'gray', fontSize: 18, fontWeight: 'bold' }}>Log Out</Text>
+                </TouchableOpacity>}
 
         </View>
     )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions ,Modal,ToastAndroid} from 'react-native';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions, Modal, ToastAndroid } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
 const { width, height } = Dimensions.get('window')
@@ -57,44 +57,44 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
             style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0, top: '50%' }}
             transparent={true}
             onBackdropPress={resetModal} >
-                <TouchableOpacity
-                onPress={resetModal} style={{backgroundColor: 'rgba(0, 0, 0, 0.8)',flex:1}}>
-            <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', width: width }}>
-                <View style={{ padding: 15, flex: 1 }}>
+            <TouchableOpacity
+                onPress={resetModal} style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', flex: 1 }}>
+                <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', width: width }}>
+                    <View style={{ padding: 15, flex: 1 }}>
 
-                    
-                    <TouchableOpacity
-                        onPress={resetModal}
-                        style={{ position: 'absolute', right: 15, top: 15 }}
-                        activeOpacity={0.8}>
-                        <Icon name="close" color={'gray'} size={30} />
-                    </TouchableOpacity>
-                    <Text style={{ marginHorizontal: 10,marginTop:10, color: '#000' , fontSize:18,fontWeight:'bold'}}>
-                        Request Id: #{reqId}
-                    </Text>
-                    {
 
-                        isAccept &&
-                        <>
-                            {/* <Text style={{
+                        <TouchableOpacity
+                            onPress={resetModal}
+                            style={{ position: 'absolute', right: 15, top: 15 }}
+                            activeOpacity={0.8}>
+                            <Icon name="close" color={'gray'} size={30} />
+                        </TouchableOpacity>
+                        <Text style={{ marginHorizontal: 10, marginTop: 10, color: '#000', fontSize: 18, fontWeight: 'bold' }}>
+                            Request Id: #{reqId}
+                        </Text>
+                        {
+
+                            isAccept &&
+                            <>
+                                {/* <Text style={{
                                 marginHorizontal: 10,
                                 color: '#313131', marginTop: 30,
                                 marginBottom: 8
                             }}>Allowed discount should be less than {proposedAmt} </Text> */}
-                            <View style={{ flexDirection: "row", borderBottonWidth: 2, borderBottomColor: "#000" }}>
-                                <TextInput
-                                    style={[styles.input]}
-                                    placeholder="Allowed Discount Amount"
-                                    placeholderTextColor={colors.text}
-                                    focusable={true}
-                                    onChangeText={text => setDiscount(Number(text) ?? 0)}
-                                    value={`${discount ?? 0}`}
-                                    defaultValue={`${proposedAmt ?? 0}`}
-                                    onBlur={checkDiscount}
-                                    keyboardType={"number-pad"}
-                                />
+                                <View style={{ flexDirection: "row", borderBottonWidth: 2, borderBottomColor: "#000" }}>
+                                    <TextInput
+                                        style={[styles.input]}
+                                        placeholder="Allowed Discount Amount"
+                                        placeholderTextColor={colors.text}
+                                        focusable={true}
+                                        onChangeText={text => setDiscount(Number(text) ?? 0)}
+                                        value={`${discount ?? 0}`}
+                                        defaultValue={`${proposedAmt ?? 0}`}
+                                        onBlur={checkDiscount}
+                                        keyboardType={"number-pad"}
+                                    />
 
-                                {/* <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
+                                    {/* <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
             <Button
                 onPress={() => setDiscount(prev => prev + 500)}
                 disabled={discount >= proposedAmt}>+
@@ -104,40 +104,40 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
                 disabled={discount <= 0}>-
             </Button>
         </ButtonGroup> */}
-                            </View>
-                        </>}
+                                </View>
+                            </>}
 
-                    {
-                        !isDiscountValid &&
-                        (discount > proposedAmt ? <Text style={{ marginHorizontal: 10, color: 'red' }}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{ marginHorizontal: 10, color: 'red' }}>Invalid value</Text>)
-                    }
+                        {
+                            !isDiscountValid &&
+                            (discount > proposedAmt ? <Text style={{ marginHorizontal: 10, color: 'red' }}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{ marginHorizontal: 10, color: 'red' }}>Invalid value</Text>)
+                        }
 
-                    <TextInput
-                        style={[styles.input, {
-                            minHeight: 100,
-                            marginTop: isAccept ? 0 : 40
-                        }]}
-                        placeholder="Enter remarks (optional)"
-                        placeholderTextColor={colors.text}
-                        onChangeText={text => setRemarks(text)}
-                        defaultValue={remarks}
-                        multiline={true}
-                        underlineColorAndroid="transparent"
-                        textAlignVertical={'top'}
-                    />
-                </View>
+                        <TextInput
+                            style={[styles.input, {
+                                minHeight: 100,
+                                marginTop: isAccept ? 0 : 40
+                            }]}
+                            placeholder="Enter remarks (optional)"
+                            placeholderTextColor={colors.text}
+                            onChangeText={text => setRemarks(text)}
+                            defaultValue={remarks}
+                            multiline={true}
+                            underlineColorAndroid="transparent"
+                            textAlignVertical={'top'}
+                        />
+                    </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <TouchableOpacity
-                        onPress={onSubmit}
-                        activeOpacity={0.8}
-                        style={{ padding: 15, backgroundColor: '#65BDF2', flex: 1 }}
-                    >
-                        <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>DONE</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={onSubmit}
+                            activeOpacity={0.8}
+                            style={{ padding: 15, backgroundColor: '#65BDF2', flex: 1 }}
+                        >
+                            <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>DONE</Text>
+                        </TouchableOpacity>
+                    </View>
 
-            </View >
+                </View >
             </TouchableOpacity>
         </Modal>
     );
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
         margin: 10,
         flex: 1,
         borderRadius: 5,
-        borderBottomColor:'gray',
-        borderBottomWidth:1
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1
     },
 
 })
