@@ -72,10 +72,15 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
                         <Text style={{ marginHorizontal: 10, marginTop: 10, color: '#000', fontSize: 18, fontWeight: 'bold' }}>
                             Request Id: #{reqId}
                         </Text>
+                        
                         {
 
                             isAccept &&
+
                             <>
+                            <Text style={{ marginHorizontal: 10, marginTop: 10, color: colors.text, fontSize: 16, }}>
+                            Enter Allowed Discount
+                            </Text>
                                 {/* <Text style={{
                                 marginHorizontal: 10,
                                 color: '#313131', marginTop: 30,
@@ -113,9 +118,16 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
                         }
 
                         <TextInput
-                            style={[styles.input, {
+                            style={[ {
                                 minHeight: 100,
-                                marginTop: isAccept ? 0 : 40
+                                marginTop: isAccept ? 0 : 40,
+                                borderRadius:5,
+                                borderColor:'gray',
+                                borderWidth:0.5,
+                                color: "#505050",
+                                fontSize: 16,
+                                margin: 10,
+                                flex: 1
                             }]}
                             placeholder="Enter remarks (optional)"
                             placeholderTextColor={colors.text}
@@ -150,11 +162,12 @@ const styles = StyleSheet.create({
     input: {
         color: "#505050",
         fontSize: 16,
-        margin: 10,
+        marginBottom:30,
+        marginHorizontal:10,
         flex: 1,
         borderRadius: 5,
         borderBottomColor: 'gray',
-        borderBottomWidth: 1
+        borderBottomWidth: 0.5
     },
 
 })

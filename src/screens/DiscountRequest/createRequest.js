@@ -294,9 +294,11 @@ const CreateRequest = ({ navigation }) => {
 
                 <View
                     style={[styles.selectView,
-                    { borderBottomColor: (!showBankNameMsg ? "gray" : colors.logoRed), marginLeft: 10 }
+                    { borderBottomColor: (!showBankNameMsg ? "gray" : colors.logoRed), marginLeft: 10}
                     ]}>
+                        
                     <Picker
+                    style={{flex:1,marginLeft:-10}}
                         selectedValue={bankName}
                         onValueChange={(itemValue, itemIndex) =>
                             setBankName(itemValue)
@@ -323,6 +325,7 @@ const CreateRequest = ({ navigation }) => {
                 <View style={[styles.inputView,
                 { borderBottomColor: (!showLoanAmtMsg ? "gray" : colors.logoRed), marginLeft: 18, marginRight: 10 }
                 ]}>
+                    <Text style={{ marginBottom: 5, fontSize: 18 ,marginRight:5}}>*</Text>
                     <TextInput
                         style={{
                             color: "#505050",
@@ -344,16 +347,17 @@ const CreateRequest = ({ navigation }) => {
                 </Text>}
 
                 <View
-                    style={[styles.selectView,
+                    style={[styles.inputView,
                     {
                         borderBottomColor: (!showActionIdMsg ? "gray" : colors.logoRed),
                         //flex: 1, flexDirection: "row",
-                        width: "100%",
+                        flex:1,flexDirection:'row',alignItems:'center' 
                     }
                     ]}>
                     {/* <Text style={{ marginBottom: 5, fontSize: 18 }}>*</Text> */}
-
+                    <Text style={{  fontSize: 18,marginBottom:10 }}>*</Text>
                     <Picker
+                        style={{flex:1,marginLeft:-6}}
                         selectedValue={actionById}
                         onValueChange={(itemValue, itemIndex) =>
                             setActionById(itemValue)
