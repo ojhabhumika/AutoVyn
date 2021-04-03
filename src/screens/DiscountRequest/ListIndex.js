@@ -6,6 +6,7 @@ const { width } = Dimensions.get('window')
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../constants/Colors'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import DiscountContext from '../../context/DiscountContext'
 
 const ListIndex = ({ navigation }) => {
 
@@ -86,16 +87,16 @@ const ListIndex = ({ navigation }) => {
 
                 <TabBarView selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
             </View>
-            <RequestList
-                discountReqList={discountReqList}
-                setDiscountReqList={setDiscountReqList}
-                filteredList={filteredList}
-                userNames={userNames}
-                loading={loading}
-                setLoading={setLoading}
-                selectedIndex={selectedIndex}
-                canUserApproveReq={canUserApproveReq}
-            />
+            <DiscountContext.Provider value={{ discountReqList, setDiscountReqList }}>
+                <RequestList
+                    filteredList={filteredList}
+                    userNames={userNames}
+                    loading={loading}
+                    setLoading={setLoading}
+                    selectedIndex={selectedIndex}
+                    canUserApproveReq={canUserApproveReq}
+                />
+            </DiscountContext.Provider>
         </>
     );
 };

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions, Modal, ToastAndroid } from 'react-native';
 import useRequest from '../../hooks/useRequest';
 import colors from '../../constants/Colors'
 const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import DiscountContext from '../../context/DiscountContext'
 
-const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList, setDiscountReqList }) => {
+const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
 
     const { makeRequest } = useRequest();
-
+    const { discountReqList, setDiscountReqList } = useContext(DiscountContext)
     const [discount, setDiscount] = useState(proposedAmt);
     const [remarks, setRemarks] = useState("");
 
@@ -20,7 +21,6 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
     }
 
     const onSubmit = () => {
-
         if (isAccept) {
             checkDiscount()
             if (!isDiscountValid) return false
@@ -34,6 +34,8 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
             },
             onSuccess: (res) => {
                 discountReqList.find(x => x.reqId == reqId).status = isAccept
+                discountReqList.find(x => x.reqId == reqId).remarks = remarks
+                discountReqList.find(x => x.reqId == reqId).allowedDiscount = discount
                 setDiscountReqList([...discountReqList])
                 let message = isAccept ? "Request Accepted!" : "Request Rejected!"
                 ToastAndroid.show(message, ToastAndroid.SHORT)
@@ -62,30 +64,26 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
                 <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', width: width }}>
                     <View style={{ padding: 15, flex: 1 }}>
 
+                        <View style={{ marginVertical: 10 }}>
+                            <TouchableOpacity
+                                onPress={resetModal}
+                                style={{ position: 'absolute', right: 15 }}
+                                activeOpacity={0.8}>
+                                <Icon name="close" color={'gray'} size={30} />
+                            </TouchableOpacity>
+                            <Text style={{ marginHorizontal: 10, color: '#000', fontSize: 20, fontWeight: 'bold' }}>
+                                Request Id #{reqId}
+                            </Text>
+                        </View>
 
-                        <TouchableOpacity
-                            onPress={resetModal}
-                            style={{ position: 'absolute', right: 15, top: 15 }}
-                            activeOpacity={0.8}>
-                            <Icon name="close" color={'gray'} size={30} />
-                        </TouchableOpacity>
-                        <Text style={{ marginHorizontal: 10, marginTop: 10, color: '#000', fontSize: 18, fontWeight: 'bold' }}>
-                            Request Id: #{reqId}
-                        </Text>
-                        
                         {
 
                             isAccept &&
 
                             <>
-                            <Text style={{ marginHorizontal: 10, marginTop: 10, color: colors.text, fontSize: 16, }}>
-                            Enter Allowed Discount
-                            </Text>
-                                {/* <Text style={{
-                                marginHorizontal: 10,
-                                color: '#313131', marginTop: 30,
-                                marginBottom: 8
-                            }}>Allowed discount should be less than {proposedAmt} </Text> */}
+                                <Text style={{ marginHorizontal: 10, marginTop: 15, color: "#696969", fontSize: 17, }}>
+                                    Enter Allowed Discount
+                                 </Text>
                                 <View style={{ flexDirection: "row", borderBottonWidth: 2, borderBottomColor: "#000" }}>
                                     <TextInput
                                         style={[styles.input]}
@@ -93,43 +91,35 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
                                         placeholderTextColor={colors.text}
                                         focusable={true}
                                         onChangeText={text => setDiscount(Number(text) ?? 0)}
-                                        value={`${discount ?? 0}`}
-                                        defaultValue={`${proposedAmt ?? 0}`}
+                                        value={discount}
+                                        defaultValue={`${proposedAmt}`}
                                         onBlur={checkDiscount}
                                         keyboardType={"number-pad"}
                                     />
 
-                                    {/* <ButtonGroup status='basic' style={{ marginLeft: "auto" }}>
-            <Button
-                onPress={() => setDiscount(prev => prev + 500)}
-                disabled={discount >= proposedAmt}>+
-            </Button>
-            <Button
-                onPress={() => setDiscount(prev => prev - 500)}
-                disabled={discount <= 0}>-
-            </Button>
-        </ButtonGroup> */}
                                 </View>
                             </>}
 
                         {
                             !isDiscountValid &&
-                            (discount > proposedAmt ? <Text style={{ marginHorizontal: 10, color: 'red' }}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{ marginHorizontal: 10, color: 'red' }}>Invalid value</Text>)
+                            (discount > proposedAmt ?
+                                <Text style={{ marginHorizontal: 10, marginBottom: 10, color: 'red' }}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{ marginHorizontal: 10, marginBottom: 10, color: 'red' }}>Invalid value</Text>)
                         }
 
                         <TextInput
-                            style={[ {
+                            style={[{
                                 minHeight: 100,
-                                marginTop: isAccept ? 0 : 40,
-                                borderRadius:5,
-                                borderColor:'gray',
-                                borderWidth:0.5,
+                                marginTop: 20,
+                                borderRadius: 5,
+                                borderColor: 'gray',
+                                borderWidth: 0.5,
                                 color: "#505050",
-                                fontSize: 16,
+                                fontSize: 17,
                                 margin: 10,
-                                flex: 1
+                                flex: 1,
+                                paddingHorizontal: 10
                             }]}
-                            placeholder="Enter remarks (optional)"
+                            placeholder="Enter Remarks (Optional)"
                             placeholderTextColor={colors.text}
                             onChangeText={text => setRemarks(text)}
                             defaultValue={remarks}
@@ -143,7 +133,11 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept, discountReqList
                         <TouchableOpacity
                             onPress={onSubmit}
                             activeOpacity={0.8}
-                            style={{ padding: 15, backgroundColor: '#65BDF2', flex: 1 }}
+                            style={{
+                                padding: 15,
+                                backgroundColor: '#65BDF2',
+                                flex: 1
+                            }}
                         >
                             <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>DONE</Text>
                         </TouchableOpacity>
@@ -162,8 +156,8 @@ const styles = StyleSheet.create({
     input: {
         color: "#505050",
         fontSize: 16,
-        marginBottom:30,
-        marginHorizontal:10,
+        marginBottom: 10,
+        marginHorizontal: 10,
         flex: 1,
         borderRadius: 5,
         borderBottomColor: 'gray',

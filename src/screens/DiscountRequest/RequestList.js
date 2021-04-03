@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../constants/Colors'
@@ -49,7 +49,7 @@ const RequestList = ({ filteredList, userNames, loading, setLoading,
                             (
                                 groupedList.map(data => {
                                     return (
-                                        <>
+                                        <Fragment key={data.title}>
                                             {data.list.length > 0 &&
                                                 <>
                                                     <Text style={styles.headingText}>{data.title}</Text>
@@ -63,7 +63,7 @@ const RequestList = ({ filteredList, userNames, loading, setLoading,
                                                     }
                                                 </>
                                             }
-                                        </>
+                                        </Fragment>
                                     )
 
                                 })
@@ -85,7 +85,7 @@ const RequestList = ({ filteredList, userNames, loading, setLoading,
 const RequestCard = ({ requestData, user, canUserApproveReq }) => {
 
     const { IsREw, isMSILEw, accessoriesAmt, allowedDiscount, carVariant, customerName, customerPhone,
-        isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName } = requestData
+        isFinance, proposedDiscountAmount, loanAmount, reqId, status, bankName, remarks } = requestData
 
     const [showModal, setShowModal] = useState(false)
     const [isAccept, setIsAccept] = useState(false)
@@ -137,6 +137,26 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                     </Text>
 
                 </View>
+                {
+                    status === true &&
+                    <View style={styles.cardRow}>
+                        <Icon name="checkmark" size={25} color={'#339989'} />
+                        <Text style={styles.cardText}>
+                            Allowed Amount ₹{allowedDiscount}
+                            {remarks && <>{"\n"} {remarks}</>}
+                        </Text>
+                    </View>
+                }
+
+                {
+                    status === false && Boolean(remarks) &&
+                    <View style={styles.cardRow}>
+                        <Icon name="close" size={25} color={'#ef5350'} />
+                        <Text style={styles.cardText}>
+                            {remarks}
+                        </Text>
+                    </View>
+                }
 
                 {
                     !canUserApproveReq && status == null &&
@@ -145,9 +165,10 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         <TouchableOpacity
                             style={[styles.actionButton, { backgroundColor: "#e7f7f5" }]}
                             activeOpacity={0.8}
-                            onPress={() =>  {
+                            onPress={() => {
                                 setIsAccept(true)
-                                setShowModal(true)}}>
+                                setShowModal(true)
+                            }}>
                             <Icon name="checkmark" size={25} color={'#339989'} />
                             <Text style={[styles.actionText, { color: "#339989" }]}>Accept</Text>
                         </TouchableOpacity>
@@ -155,16 +176,23 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                         <TouchableOpacity
                             style={[styles.actionButton, { backgroundColor: "#ffebee" }]}
                             activeOpacity={0.8}
-                            onPress={() => { 
+                            onPress={() => {
                                 setIsAccept(false)
-                                setShowModal(true) }}>
+                                setShowModal(true)
+                            }}>
                             <Icon name="close" size={25} color={'#ef5350'} />
                             <Text style={[styles.actionText, { color: "#ef5350" }]}>Reject</Text>
                         </TouchableOpacity>
                     </View>
                 }
             </>
-            < ActionModal reqId={reqId} hide={() => setShowModal(false)} show={showModal} isAccept={isAccept} />
+            <ActionModal
+                reqId={reqId}
+                proposedAmt={proposedDiscountAmount}
+                show={showModal}
+                hide={() => setShowModal(false)}
+                isAccept={isAccept}
+            />
         </TouchableOpacity >
     )
 }

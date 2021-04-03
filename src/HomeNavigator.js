@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Dashboard from './screens/Dashboard'
 import Login from './screens/Login'
-import CreateRequest from './screens/DiscountRequest/createRequest';
+import CreateRequest from './screens/DiscountRequest/CreateRequest';
 import ListIndex from './screens/DiscountRequest/ListIndex'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

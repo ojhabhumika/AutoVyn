@@ -325,7 +325,6 @@ const CreateRequest = ({ navigation }) => {
                 <View style={[styles.inputView,
                 { borderBottomColor: (!showLoanAmtMsg ? "gray" : colors.logoRed), marginLeft: 18, marginRight: 10 }
                 ]}>
-                    <Text style={{ marginBottom: 5, fontSize: 18 ,marginRight:5}}>*</Text>
                     <TextInput
                         style={{
                             color: "#505050",
