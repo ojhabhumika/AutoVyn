@@ -69,7 +69,7 @@ const ListIndex = ({ navigation }) => {
             <View style={{ shadowColor: 'gray', elevation: 9, shadowOpacity: 1 }}>
                 <View style={styles.navBar}>
 
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.push("Dashboard")}>
                         <Icon name='arrow-left' size={30} color={colors.white} style={{ marginLeft: 15 }} />
                     </TouchableOpacity>
 

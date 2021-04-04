@@ -84,41 +84,35 @@ const Dashboard = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View>
-                <NavigationBar
-                    //title={"AUTO-VYN"}
-                    navigation={navigation}
-                />
 
-                <View style={{
-                    flexDirection: "column",
-                    borderRadius: 10,
-                    marginBottom: 25,
-                    marginHorizontal: 25,
-
-                }}>
-                    <Text style={[styles.userText, { fontSize: 25, fontWeight: "bold", }]}>Welcome, {userName}</Text>
-                    <Text style={styles.userText}>{userLocations}</Text>
-                </View>
-            </View>
+            <NavigationBar
+                //title={"AUTO-VYN"}
+                navigation={navigation}
+            />
 
             <View style={{
-                flex: 1, backgroundColor: "#fff",
-                borderTopLeftRadius: 40,
-                borderTopRightRadius: 40, paddingTop: 10
-            }}>
-                <View style={styles.listContainer}>
+                flexDirection: "column",
+                borderRadius: 10,
+                marginBottom: 15,
+                marginHorizontal: 25,
 
-                    <FlatList
-                        data={data}
-                        keyExtractor={(item, index) => index.toString()}
-                        numColumns={2}
-                        renderItem={({ item }) => (
-                            <ListItem item={item} />
-                        )}
-                    />
-                </View>
+            }}>
+                <Text style={[styles.userText, { fontSize: 25, fontWeight: "bold", }]}>Welcome, {userName}</Text>
+                <Text style={styles.userText}>{userLocations}</Text>
             </View>
+
+            <View style={styles.listContainer}>
+
+                <FlatList
+                    data={data}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={2}
+                    renderItem={({ item }) => (
+                        <ListItem item={item} />
+                    )}
+                />
+            </View>
+
         </View>
     )
 }
@@ -164,18 +158,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: colors.logoBlue,
     },
-    toolbar: {
-        width: '100%',
-        backgroundColor: '#EAE9E9',
-        height: 55,
-        flexDirection: 'row'
-    },
     item: {
         maxWidth: Dimensions.get('window').width / 2,
         flex: 0.5,
         height: height / 5,
         backgroundColor: '#fff',
-        marginBottom: 20,
+        marginVertical: 10,
         marginHorizontal: 12,
         borderRadius: 4,
         justifyContent: 'center',
@@ -185,18 +173,19 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         elevation: 5,
         borderWidth: 1,
-        borderColor: "#e3e3e3"
+        borderColor: "#e3e3e3",
     },
     listContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        paddingBottom: 30,
-        paddingTop: 10,
         backgroundColor: "#fff",
+        position: "absolute",
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        paddingVertical: 20,
         bottom: 0,
-        position: "absolute"
     },
     userText: {
         fontSize: 20,
