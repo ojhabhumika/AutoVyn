@@ -38,8 +38,12 @@ const ListIndex = ({ navigation }) => {
             url: '/discountRequests',
             method: 'GET',
             onSuccess: (res) => {
+                //console.log('res :>> ', res);
                 setDiscountReqList(res.userRequests);
                 setUserNames(res.userNames)
+                if (res.userRequests.length === 0) {
+                    setLoading(false)
+                }
             },
             onError: () => setLoading(false)
         })

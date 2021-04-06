@@ -22,14 +22,12 @@ const Login = ({ navigation }) => {
         setShowUserMsg(false)
         if (!userName) setShowUserMsg(true)
     }
-
     const validatePwd = () => {
         setShowPwdMsg(false)
         if (!password) setShowPwdMsg(true)
     }
 
     const onSumbit = () => {
-        // return navigation.navigate('Dashboard')
         validateUserName()
         validatePwd()
         setShowValidMsg(false)
@@ -43,7 +41,7 @@ const Login = ({ navigation }) => {
 
                     await AsyncStorage.setItem('@token', res.token)
                     await AsyncStorage.setItem('@user', JSON.stringify(res))
-                    navigation.navigate('Dashboard')
+                    navigation.push('Dashboard')
                 },
                 onFailure: () => setShowValidMsg(true)
             })

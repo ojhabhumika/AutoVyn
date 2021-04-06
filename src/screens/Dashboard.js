@@ -39,7 +39,7 @@ const Dashboard = ({ navigation }) => {
         text: "#339989",
         bg: "#e7f7f5",
         permission: canUserCreateReq || canUserApproveReq,
-        onPress: () => navigation.navigate('ListIndex')
+        onPress: () => navigation.push('ListIndex')
     },
     {
         title: "Vehicle Delivery",

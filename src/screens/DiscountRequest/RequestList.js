@@ -18,15 +18,15 @@ const RequestList = ({ filteredList, userNames, loading, setLoading,
         if (filteredList.length > 0) {
             const groupBy = [{
                 title: "TODAY",
-                list: filteredList.filter(x => isToday(parseISO(x.createdAt)))
+                list: filteredList.filter(x => isToday(parseISO(x.updatedAt.split("T")[0])))
             },
             {
                 title: "YESTERDAY",
-                list: filteredList.filter(x => isYesterday(parseISO(x.createdAt)))
+                list: filteredList.filter(x => isYesterday(parseISO(x.updatedAt.split("T")[0])))
             },
             {
                 title: "OLDER",
-                list: filteredList.filter(x => !isToday(parseISO(x.createdAt)) && !isYesterday(parseISO(x.createdAt)))
+                list: filteredList.filter(x => !isToday(parseISO(x.updatedAt.split("T")[0])) && !isYesterday(parseISO(x.updatedAt.split("T")[0])))
             }]
             setGroupedList(groupBy)
             setLoading(false)
@@ -159,7 +159,7 @@ const RequestCard = ({ requestData, user, canUserApproveReq }) => {
                 }
 
                 {
-                    !canUserApproveReq && status == null &&
+                    canUserApproveReq && status == null &&
                     <View style={styles.actionRow}>
 
                         <TouchableOpacity

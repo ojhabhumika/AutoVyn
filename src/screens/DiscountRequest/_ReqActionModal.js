@@ -103,7 +103,8 @@ const ActionModal = ({ show, hide, reqId, proposedAmt, isAccept }) => {
                         {
                             !isDiscountValid &&
                             (discount > proposedAmt ?
-                                <Text style={{ marginHorizontal: 10, marginBottom: 10, color: 'red' }}>Allowed discount should be less than ${proposedAmt} </Text> : <Text style={{ marginHorizontal: 10, marginBottom: 10, color: 'red' }}>Invalid value</Text>)
+                                <Text style={{ marginHorizontal: 10, marginBottom: 10, color: 'red' }}>Allowed discount should be less than ₹{proposedAmt} </Text>
+                                : <Text style={{ marginHorizontal: 10, marginBottom: 10, color: 'red' }}>Invalid value</Text>)
                         }
 
                         <TextInput
